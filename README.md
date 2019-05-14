@@ -21,4 +21,4 @@ A user may have several accounts.
 
 ### Preliminary database graph
 
-[!diagram](/transactionApp.png)
+![diagram](/transactionApp.png)
