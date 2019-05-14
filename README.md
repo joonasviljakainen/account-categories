@@ -18,3 +18,7 @@ Transaction imports will be manual, and assuming different banks offer
 different formats, a maximum of two banks will be supported. 
 
 A user may have several accounts.
+
+### Preliminary database graph
+
+[!diagram](/transactionApp.png)
