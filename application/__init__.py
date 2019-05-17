@@ -5,8 +5,7 @@ app = Flask(__name__)
 from flask_sqlalchemy import SQLAlchemy
 
 # set up transaction db
-app.conficg["SQLALCHEMY_DATABASE_URI] = "sqlite:///tseks.db"
-
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///transactions.db"
 # request constant logging & debug
 app.config["SQLALCHEMY_ECHO"] = True
 
@@ -14,7 +13,7 @@ app.config["SQLALCHEMY_ECHO"] = True
 db = SQLAlchemy(app)
 
 from application import views
-
+from application.transactions import models
 # Creating all database tables
 
 db.create_all()
