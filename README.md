@@ -1,9 +1,11 @@
-# Account Categories
+# Pivoslayer
 
 This is an application intended to serve as the course project for tsoha 
 at HYY.
 
 ## Purpose
+
+I am going to slay Pivo. You took everything from me. All of my categories... gone.
 
 Account-Categories is a database app that will allow users to import 
 account transactions (sadly, manually) and set categories for them. The 
