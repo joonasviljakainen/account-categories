@@ -3,6 +3,8 @@
 This is an application intended to serve as the course project for tsoha 
 at HYY.
 
+The application is available (without any features) at [https://pivo-slayer.herokuapp.com/](https://pivo-slayer.herokuapp.com/).
+
 ## Purpose
 
 I am going to slay Pivo. You took everything from me. All of my categories... gone.
