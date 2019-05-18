@@ -5,15 +5,16 @@ from application import app
 def index():
     return render_template("index.html")
 
-@app.route("/tasks")
-def get_tasks():
-    return "task view not implemented yet"
+@app.route("/transactions")
+def get_transactions():
+    return "transaction view not implemented yet"
 
-@app.route("/tasks/new")
-def form_task():
-    return "HULLO DOG"
+@app.route("/transactions/new")
+def transaction_form():
+    return render_template("/templates/newtransaction.html")
+    #return render_template("templates/newtransaction.html")
 
-@app.route("/transactions/", methods=["POST"])
-def create_task():
-    print(request.form.get("amount"))
+@app.route("/transactions", methods=["POST"])
+def create_transaction():
+    print(request.form.get("name"))
     return "HELLA COOL"
