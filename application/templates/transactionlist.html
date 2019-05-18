@@ -4,14 +4,16 @@
 <h1>Transactions</h1>
 <table>
     <tr>
-        <th>Amount</th>
-        <th>Info</th>
+        <th>Transaction ID</th>
+        <th>Amount (EUR)</th>
+        <th>Counterparty Name</th>
         <th>Credit or debit</th>
         <th>Message</th>
     </tr>
     {% for transaction in transactions %}
     <tr>
-        <td>{{ transaction.amount }} EUR</td>
+        <td>{{ transaction.id }}</td>
+        <td>{{ transaction.amount }}</td>
         <td>{{ transaction.counterparty_name }}</td>
         <td>{{ transaction.credit_or_debit }}</td>
         <td>{{ transaction.message }}</td>
