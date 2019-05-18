@@ -1,5 +1,6 @@
-from flask import render_template, request
-from application import app
+from flask import render_template, request, redirect, url_for
+from application import app, db
+from application.transactions.models import Transaction
 
 @app.route("/")
 def index():
@@ -7,7 +8,7 @@ def index():
 
 @app.route("/transactions")
 def get_transactions():
-    return "transaction view not implemented yet"
+    return render_template("transactionlist.html", transactions = Transaction.query.all())
 
 @app.route("/transactions/new")
 def transaction_form():
@@ -16,4 +17,14 @@ def transaction_form():
 @app.route("/transactions", methods=["POST"])
 def create_transaction():
     print(request.form.get("name"))
-    return "HELLA COOL"
+    t = Transaction()
+    t.amount = "100.01"
+    t.message = request.form.get("name")
+    t.credit_or_debit = "DEBIT"
+    t.counterparty_name = "SERGEI"
+    t.transaction_type = "TRANSFER"
+
+    db.session().add(t)
+    db.session().commit()
+
+    return redirect(url_for("get_transactions"))

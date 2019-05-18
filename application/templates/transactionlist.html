@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Transactions</h1>
+<table>
+    <tr>
+        <th>Amount</th>
+        <th>Info</th>
+        <th>Credit or debit</th>
+        <th>Message</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+        <td>{{ transaction.amount }} EUR</td>
+        <td>{{ transaction.counterparty_name }}</td>
+        <td>{{ transaction.credit_or_debit }}</td>
+        <td>{{ transaction.message }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}
