@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 from application import app
 
 @app.route("/")
@@ -11,8 +11,7 @@ def get_transactions():
 
 @app.route("/transactions/new")
 def transaction_form():
-    return render_template("/templates/newtransaction.html")
-    #return render_template("templates/newtransaction.html")
+    return render_template("newtransaction.html")
 
 @app.route("/transactions", methods=["POST"])
 def create_transaction():
