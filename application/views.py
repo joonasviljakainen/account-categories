@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for
 from application import app, db
 from application.transactions.models import Transaction
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
