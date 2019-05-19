@@ -6,7 +6,12 @@
   </head>
 
   <body>
+    <ul>
+      <li><a href="{{url_for('get_transactions')}}">Transactions</a></li>
+      <li><a href="{{url_for('transaction_form')}}">Add a transaction</a></li>
+    </ul>
     {% block body %}
+    
     <p>
 	 Content
     </p>

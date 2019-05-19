@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1>Transaction {{transaction.id}}</h1>
+
+<table>
+  <tr>
+    <td>Amount (EUR)</td>
+    <td>{{transaction.amount}}</td>    
+  </tr>
+  <tr>
+    <td>Credit or debit</td>
+    <td>{{transaction.credit_or_debit}}</td>    
+  </tr>
+  <tr>
+      <td>Counterparty</td>
+      <td>{{transaction.counterparty}}</td>
+  </tr>
+  <tr>
+      <td>Message</td>
+      <td>{{transaction.message}}</td>
+  </tr>
+</table>
+
+<h6>Change the message</h6>
+<form method="POST" action="{{url_for('modify_transaction', transaction_id=transaction.id)}}" >
+    <input name="message" type="text" placeholder="Transaction message"/>
+    <input type="submit" value="Submit"/>
+</form>
+
+{% endblock %}
