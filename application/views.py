@@ -33,15 +33,22 @@ def transaction_form():
     return render_template("newtransaction.html")
 
 
+def format_number_string(numberString): # TODO move to another module
+    split = numberString.split(".")
+    if len(split[1]) < 2:
+        numberString = "" + numberString + "0"
+    return numberString
+
 @app.route("/transactions", methods=["POST"])
 def create_transaction():
-    print(request.form.get("name"))
+    print(request.form.get("message"))
     t = Transaction()
-    t.amount = "100.01"
-    t.message = request.form.get("name")
-    t.credit_or_debit = "DEBIT"
-    t.counterparty_name = "SERGEI"
-    t.transaction_type = "TRANSFER"
+    t.transaction_type = "TRANSFER" # Preset pending value determination
+
+    t.amount = format_number_string(request.form.get("amount")) # string
+    t.message = request.form.get("message")
+    t.credit_or_debit = request.form.get("creditordebit")
+    t.counterparty_name = request.form.get("counterparty")
 
     db.session().add(t)
     db.session().commit()

@@ -1,7 +1,8 @@
 venv
 .vscode
 vscode
-**/__pychache/*
+**/_pychache/*
+**/__pycache__
 application/transaction.db
 */*.db
 **/'.db
