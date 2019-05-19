@@ -2,4 +2,4 @@ venv
 .vscode
 vscode
 **/__pychache/*
-transaction.db
+application/transaction.db
