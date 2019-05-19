@@ -3,3 +3,5 @@ venv
 vscode
 **/__pychache/*
 application/transaction.db
+*/*.db
+**/'.db
