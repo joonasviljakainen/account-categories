@@ -41,7 +41,7 @@ def transaction_form():
 def format_number_string(numberString): # TODO move to another module
     split = numberString.split(".")
 
-    if len(split) :
+    if len(split) == 1 :
         return (numberString + ".00")
     if len(split[1]) < 2:
         numberString = "" + numberString + "0"
