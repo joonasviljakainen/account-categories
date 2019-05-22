@@ -1,0 +1,31 @@
+{% extends "layout.html"%}
+
+{% block body %}
+{{ error }}
+
+<form method="POST" action="{{ url_for('create_user') }}">
+    <table>
+        <tr>
+            <td>{{ form.displayname.label }}</td>
+            <td>{{ form.displayname }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.username.label }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.pwdvalidation.label }}</td>
+            <td>{{ form.pwdvalidation }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Create user" />
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

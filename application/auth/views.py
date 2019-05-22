@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_user, logout_user
 
-from application import app
+from application import app, db
 from application.auth.models import User
-from application.auth.forms import LoginForm
+from application.auth.forms import LoginForm, CreateUserForm
 
 @app.route("/auth/login", methods = ["GET", "POST"])
 def auth_login():
@@ -26,3 +26,30 @@ def auth_login():
 def auth_logout():
     logout_user()
     return redirect(url_for("index"))
+
+@app.route("/auth/user/new", methods = ["GET", "POST"])
+def create_user():
+    if request.method == "GET":
+        return render_template("/auth/newuser.html", form = CreateUserForm())
+
+    form = CreateUserForm(request.form)
+
+    user = User.query.filter_by(username=form.username.data).first()
+    if not user:
+        print("Creating new user with username " + form.username.data)
+
+        
+        username = form.username.data
+        password = form.password.data ## CHANGE TO BE BCRYPTED
+        name = form.displayname.data
+        
+        u = User(name, username, password)
+
+        db.session().add(u)
+        db.session().commit()
+
+        return redirect(url_for("index"))
+
+    return render_template("/auth/newuser.html", form = form, error = "Username already in use! Choose another one.")
+
+
