@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from application import app, db
 from application.transactions.models import Transaction
+from application.transactions.forms import TransactionForm
 
 
 @app.route("/")
@@ -30,18 +31,23 @@ def modify_transaction(transaction_id):
 
 @app.route("/transactions/new")
 def transaction_form():
-    return render_template("newtransaction.html")
+    #return render_template("newtransaction.html")
+    return render_template("newtransaction.html", form = TransactionForm())
 
 
 def format_number_string(numberString): # TODO move to another module
     split = numberString.split(".")
+
+    if len(split) :
+        return (numberString + ".00")
     if len(split[1]) < 2:
         numberString = "" + numberString + "0"
     return numberString
 
 @app.route("/transactions", methods=["POST"])
 def create_transaction():
-    print(request.form.get("message"))
+    
+    
     t = Transaction()
     t.transaction_type = "TRANSFER" # Preset pending value determination
 

@@ -3,6 +3,73 @@
 {% block body %}
 
 <form method="POST" action="{{url_for('create_transaction')}}">
+    <table>
+        <tr>
+            <td>
+                {{ form.amount.label }}
+            </td>
+            <td>
+                {{ form.amount }}
+            </td>
+            <td>
+        </tr>
+        <tr>
+            <td>{{ form.bookingdate.label }}</td>
+            <td>{{ form.bookingdate }}</td>
+            <td>
+                <ul>
+                    {% for error in form.bookingdate.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ form.counterparty.label }}</td>
+            <td>{{ form.counterparty }}</td>
+            <td>
+                <ul>
+                    {% for error in form.counterparty.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ form.iban.label }}</td>
+            <td>{{ form.iban }}</td>
+            <td>
+                <ul>
+                    {% for error in form.iban.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ form.message.label }}</td>
+            <td>{{ form.message }}</td>
+            <td>
+                <ul>
+                    {% for error in form.message.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>{{ form.creditordebit.label }}</td>
+            <td>{{ form.creditordebit }}</td>
+            <td>
+                <ul>    
+                {% for error in form.creditordebit.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <!--
     <div><label for="amount">Amount: </label><input type="number" min="0.00" max="1000000.00" step="0.01" name="amount" /></div>
     <div><label for="counterparty">Counterparty: </label><input type="text" name="counterparty" /></div>
     <div><label for="message">Message or reference number: </label><input type="text" name="message" /></div>
@@ -10,7 +77,7 @@
         <option value="DEBIT">Debit</option>
         <option value="CREDIT">Credit</option>
     </select></div>
-    <div><label for="name">Name: </label><input type="text" name="name" /></div>
+    <div><label for="name">Name: </label><input type="text" name="name" /></div>-->
     <div><input type="submit" value="Submit transaction" /></div>
 
 </form>
