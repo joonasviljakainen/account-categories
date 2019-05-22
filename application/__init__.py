@@ -14,6 +14,9 @@ db = SQLAlchemy(app)
 
 from application import views
 from application.transactions import models
-# Creating all database tables
 
+from application.auth import models
+from application.auth import views
+
+# Creating all database tables
 db.create_all()
