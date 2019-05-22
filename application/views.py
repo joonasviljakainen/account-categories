@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required
 from application import app, db
 from application.transactions.models import Transaction
 from application.transactions.forms import TransactionForm
@@ -10,16 +11,18 @@ def index():
 
 
 @app.route("/transactions")
+@login_required
 def get_transactions():
     return render_template("transactionlist.html", transactions = Transaction.query.all())
 
-
 @app.route("/transactions/<transaction_id>/", methods=["GET"])
+@login_required
 def get_transaction(transaction_id):
     return render_template("transaction.html", transaction = Transaction.query.get(transaction_id))
 
 
 @app.route("/transactions/<transaction_id>/", methods=["POST"])
+@login_required
 def modify_transaction(transaction_id):
 
     t = Transaction.query.get(transaction_id)
@@ -28,8 +31,8 @@ def modify_transaction(transaction_id):
 
     return redirect(url_for("get_transaction", transaction_id=t.id))
 
-
 @app.route("/transactions/new")
+@login_required
 def transaction_form():
     #return render_template("newtransaction.html")
     return render_template("newtransaction.html", form = TransactionForm())
@@ -45,6 +48,7 @@ def format_number_string(numberString): # TODO move to another module
     return numberString
 
 @app.route("/transactions", methods=["POST"])
+@login_required
 def create_transaction():
     
     
