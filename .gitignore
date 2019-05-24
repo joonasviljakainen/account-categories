@@ -6,3 +6,4 @@ vscode
 application/transaction.db
 */*.db
 **/'.db
+application/transaction/__pycache__
