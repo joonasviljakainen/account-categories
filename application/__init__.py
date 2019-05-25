@@ -12,11 +12,17 @@ app.config["SQLALCHEMY_ECHO"] = True
 # Create database object
 db = SQLAlchemy(app)
 
+# Transactions 
 from application import views
 from application.transactions import models
 
+# Auth
 from application.auth import models
 from application.auth import views
+
+# Bank accounts
+from application.bankaccounts import models
+from application.bankaccounts import views
 
 # Login
 from application.auth.models import User
