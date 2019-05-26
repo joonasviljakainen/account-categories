@@ -12,7 +12,12 @@
     </tr>
     {% for transaction in transactions %}
     <tr>
-        <td><a href="{{url_for('get_transaction', transaction_id=transaction.id)}}">{{ transaction.id }}</a></td>
+        <td>
+            <a href="{{ url_for('get_transaction', transaction_id=transaction.id) }}">
+                {{ transaction.id }}
+
+            </a>
+        </td>
         <td>{{ transaction.amount }}</td>
         <td>{{ transaction.counterparty_name }}</td>
         <td>{{ transaction.credit_or_debit }}</td>

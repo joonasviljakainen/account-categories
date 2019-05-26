@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h2>{{ account.name }}</h2>
+<table>
+    <tr>
+        <td>Name</td>
+        <td>{{ account.name }}</td>
+    </tr>
+    <tr>
+        <td>Bank</td>
+        <td>{{ account.bank }}</td>
+    </tr>
+    <tr>
+        <td>Balance</td>
+        <td>{{ account.balance }}</td>
+    </tr>
+</table>
+
+<h3>Account transactions</h3>
+<table>
+    <tr>
+        <th>Booking Date</th>
+        <th>Counterparty</th>
+        <th>Credit or Debit</th>
+        <th>Amount</th>
+        <th>Message or Refnum</th>
+        <th>Transaction Type</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+        <td>
+            <a href="{{ url_for('get_transaction', transaction_id=transaction.id) }}">
+                {{ transaction.booking_date }}
+            </a>
+        </td>
+        <td>{{ transaction.counterparty_name }}</td>
+        <td>{{ transaction.credit_or_debit }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.message }}</td>
+        <td>{{ transaction.transaction_type }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

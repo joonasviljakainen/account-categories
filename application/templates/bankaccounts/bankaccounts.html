@@ -14,7 +14,11 @@
     </tr>
     {% for account in accounts %}
     <tr>
-        <td>{{ account.id }}</td>
+        <td>
+            <a href="{{ url_for('get_bankaccount', bankaccount_id=account.id) }}">
+                {{ account.id }}
+            </a>
+        </td>
         <td>{{ account.name }}</td>
         <td>{{ account.bank }}</td>
         <td>{{ account.balance }}</td>

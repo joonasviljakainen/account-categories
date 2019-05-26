@@ -5,12 +5,20 @@ from application import app, db
 from application.bankaccounts.models import BankAccount
 from application.bankaccounts.forms import AccountForm
 
+@app.route("/bankaccounts/<bankaccount_id>")
+@login_required
+def get_bankaccount(bankaccount_id):
+    print(bankaccount_id)
+    bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
+    if current_user.id == bankaccount.user_id:
+        print("FOUND")
+        return render_template("/bankaccounts/singlebankaccount.html", account = bankaccount, transactions=bankaccount.transactions)
+
+
 @app.route("/bankaccounts", methods = ["GET", "POST"])
 @login_required
 def bankaccounts():
     if request.method == "GET":
-        #accs = BankAccount.query(BankAccount.user_id(current_user.id))
-        #return render_template("/bankaccounts/bankaccounts.html", accounts = BankAccount.query.all() , form = AccountForm())
         accs = BankAccount.query.filter_by(user_id=current_user.id)
         return render_template("/bankaccounts/bankaccounts.html", accounts = accs , form = AccountForm())
 

@@ -1,13 +1,16 @@
 from application import db
 
 class Transaction(db.Model):
+    __tablename__ = "transaction"
+
     id = db.Column(db.Integer, primary_key=True)
     booking_date = db.Column(db.Date, default=db.func.current_timestamp())
     value_date = db.Column(db.Date, default=db.func.current_timestamp())
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     modified_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-    # TODO: Account
+    #user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
+    bankaccount_id = db.Column(db.Integer, db.ForeignKey('bankaccount.id'), nullable=False)
 
     counterparty_name = db.Column(db.String(144), nullable=False)
     amount = db.Column(db.String(10), nullable=False)
