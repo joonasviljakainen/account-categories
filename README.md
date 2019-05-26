@@ -11,6 +11,8 @@ I am going to slay Pivo. You took everything from me. All of my categories... go
 
 Pivo-Slayer is a database app that will allow users to import account transactions and set categories for them.
 
+The aim is to allow category-based spending analysis on a monthly and/or weekly basis to help users understand their cash flow and plan their personal economy.
+
 ### User stories
 
 See [User stories](/documentation/stories.md).
