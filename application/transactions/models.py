@@ -7,6 +7,8 @@ class Transaction(db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     modified_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+    # TODO: Account
+
     counterparty_name = db.Column(db.String(144), nullable=False)
     amount = db.Column(db.String(10), nullable=False)
 

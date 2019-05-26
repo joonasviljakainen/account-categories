@@ -1,13 +1,18 @@
 from flask import render_template, request, redirect, url_for
+from flask_login import login_required, current_user
 
 from application import app, db
 from application.bankaccounts.models import BankAccount
 from application.bankaccounts.forms import AccountForm
 
 @app.route("/bankaccounts", methods = ["GET", "POST"])
+@login_required
 def bankaccounts():
     if request.method == "GET":
-        return render_template("/bankaccounts/bankaccounts.html", accounts = BankAccount.query.all() , form = AccountForm())
+        #accs = BankAccount.query(BankAccount.user_id(current_user.id))
+        #return render_template("/bankaccounts/bankaccounts.html", accounts = BankAccount.query.all() , form = AccountForm())
+        accs = BankAccount.query.filter_by(user_id=current_user.id)
+        return render_template("/bankaccounts/bankaccounts.html", accounts = accs , form = AccountForm())
 
     form = AccountForm(request.form)
     ## TODO validations
@@ -20,6 +25,7 @@ def bankaccounts():
     a = BankAccount()
     a.name = form.name.data
     a.bank = form.bank.data
+    a.user_id = current_user.id
     if a.balance:
         a.balance = form.balance.data
 

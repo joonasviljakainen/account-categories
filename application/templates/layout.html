@@ -15,9 +15,9 @@
 
     {% endif %}
     <ul>
+      <li><a href="{{ url_for('bankaccounts') }}">Bank Accounts</a></li>
       <li><a href="{{url_for('get_transactions')}}">Transactions</a></li>
       <li><a href="{{url_for('transaction_form')}}">Add a transaction</a></li>
-      <li><a href="{{url_for('auth_login')}}">Log in</a></li>
     </ul>
     {% block body %}
     
