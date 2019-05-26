@@ -13,7 +13,10 @@ def index():
 @app.route("/transactions")
 @login_required
 def get_transactions():
-    return render_template("transactionlist.html", transactions = Transaction.query.all())
+    ts = Transaction.query.filter(Transaction.bankaccount_id.in_(map(lambda bankaccount: bankaccount.id, current_user.bankaccounts)))
+    return render_template("transactionlist.html", transactions = ts)
+    #return render_template("transactionlist.html", transactions = Transaction.query.all())
+
 
 @app.route("/transactions/<transaction_id>/", methods=["GET"])
 @login_required
@@ -31,20 +34,18 @@ def modify_transaction(transaction_id):
 
     return redirect(url_for("get_transaction", transaction_id=t.id))
 
+
 @app.route("/transactions/new")
 @login_required
 def transaction_form():
 
     form = TransactionForm()
     accs = current_user.bankaccounts
-
-    #for g in current_user.bankaccounts:
-    #    print("adsfölkjfdsa " + str(g.id) + " daf " + g.name )
     
     form.account.choices = [(acc.id, acc.name) for acc in accs]
     return render_template("newtransaction.html", form = form)
 
-
+# MONETARY FORMATTING
 def format_number_string(numberString): # TODO move to another module
     split = numberString.split(".")
 
@@ -54,6 +55,7 @@ def format_number_string(numberString): # TODO move to another module
         numberString = "" + numberString + "0"
     return numberString
 
+
 @app.route("/transactions", methods=["POST"])
 @login_required
 def create_transaction():
@@ -62,6 +64,7 @@ def create_transaction():
     t = Transaction()
     t.transaction_type = "TRANSFER" # Preset pending value determination
     
+    # OWNERSHIP VALIDATION
     isOwn = False
     requestedAccount = int(request.form.get("account"))
     for g in current_user.bankaccounts:
@@ -77,7 +80,6 @@ def create_transaction():
         # Account owned by user
         print("Authorized")
 
-    # TODO validate that the transaction creator owns the account
     t.bankaccount_id = requestedAccount
     t.amount = format_number_string(request.form.get("amount")) # string
     t.message = request.form.get("message")
