@@ -1,13 +1,17 @@
 from flask import Flask
+import os
 app = Flask(__name__)
 
 # SQLALCHEMY
 from flask_sqlalchemy import SQLAlchemy
 
 # set up transaction db
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///transactions.db"
-# request constant logging & debug
-app.config["SQLALCHEMY_ECHO"] = True
+if os.environ.get("HEROKU"):
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///transactions.db"
+    # request constant logging & debug
+    app.config["SQLALCHEMY_ECHO"] = True
 
 # Create database object
 db = SQLAlchemy(app)
@@ -41,4 +45,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 # Creating all database tables
-db.create_all()
+try:
+    db.create_all()
+except:
+    pass
