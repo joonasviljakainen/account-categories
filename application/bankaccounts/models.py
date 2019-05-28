@@ -12,4 +12,5 @@ class BankAccount(db.Model):
     transactions = db.relationship("Transaction", backref="transaction", lazy = True)
 
     # EURO CENTS pls
-    balance = db.Column(db.Integer, default=0)
+    initial_balance = db.Column(db.String, default="0.00")
+    current_balance = db.Column(db.String, default="0.00")

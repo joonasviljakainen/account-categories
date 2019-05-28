@@ -10,7 +10,8 @@
         <th>ID</th>
         <th>Name</th>
         <th>Bank</th>
-        <th>Balance</th>
+        <th>Initial Balance</th>
+        <th>Current Balance</th>
     </tr>
     {% for account in accounts %}
     <tr>
@@ -21,7 +22,8 @@
         </td>
         <td>{{ account.name }}</td>
         <td>{{ account.bank }}</td>
-        <td>{{ account.balance }}</td>
+        <td>{{ account.initial_balance }}</td>
+        <td>{{ account.current_balance }}</td>
     </tr>
     {% endfor %}
 </table>

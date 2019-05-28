@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
+from pprint import pprint
 
 from application import app, db
 from application.bankaccounts.models import BankAccount
@@ -31,11 +32,11 @@ def bankaccounts():
     
     print("Creating bank account with name " + form.name.data)
     a = BankAccount()
+    a.user_id = current_user.id
     a.name = form.name.data
     a.bank = form.bank.data
-    a.user_id = current_user.id
-    if a.balance:
-        a.balance = form.balance.data
+    a.initial_balance = form.balance.data
+    a.current_balance = a.initial_balance
 
     db.session().add(a)
     db.session().commit()
