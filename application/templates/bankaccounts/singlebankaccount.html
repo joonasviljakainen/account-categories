@@ -6,6 +6,12 @@
     <tr>
         <td>Name</td>
         <td>{{ account.name }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('update_bankaccount', bankaccount_id = account.id) }}">
+                <input type="text" name="accountname" />
+                <button type="submit">Update name</button>
+            </form>
+    </td>
     </tr>
     <tr>
         <td>Bank</td>

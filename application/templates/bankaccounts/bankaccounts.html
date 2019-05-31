@@ -24,6 +24,11 @@
         <td>{{ account.bank }}</td>
         <td>{{ account.initial_balance }}</td>
         <td>{{ account.current_balance }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('delete_bankaccount', bankaccount_id=account.id) }}">
+            <button type="submit">Delete this account</button>
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>
