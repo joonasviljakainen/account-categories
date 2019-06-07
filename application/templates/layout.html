@@ -3,30 +3,44 @@
   <head>
     <meta charset="utf-8">
     <title>Pivoslayer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
 
   <body>
-    {% if current_user.is_authenticated %}
-    <ul>
-      <p>Logged in as {{ current_user.name }}</p>
-      <li><a href="{{ url_for('bankaccounts') }}">Bank Accounts</a></li>
-      <li><a href="{{url_for('get_transactions')}}">Transactions</a></li>
-      <li><a href="{{url_for('transaction_form')}}">Add a transaction</a></li>
-      <li><a href="{{url_for('categories')}}">Categories</a></li>
-      <li><a href="{{ url_for('auth_logout') }} ">Logout</a></li>
-    </ul>
-    {% else %}
-    <a href="{{ url_for('auth_login') }}">Log in</a>
-    <a href="{{ url_for('create_user') }}">Sign up</a>
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Pivo Slayer</a>
+        </div>
+        {% if current_user.is_authenticated %}
+        <ul class="nav navbar-nav">
+          <li><a href="{{ url_for('bankaccounts') }}">Bank Accounts</a></li>
+          <li><a href="{{url_for('get_transactions')}}">Transactions</a></li>
+          <li><a href="{{url_for('transaction_form')}}">Add a transaction</a></li>
+          <li><a href="{{url_for('categories')}}">Categories</a></li>
+          <li><a href="{{ url_for('auth_logout') }} ">Logout</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <p>Logged in as {{ current_user.name }}</p>
+        </ul>
+        {% else %}
+        <ul class="nav navbar-right">
+            <li><a href="{{ url_for('auth_login') }}">Log in</a></li>
+            <li><a href="{{ url_for('create_user') }}">Sign up</a></li>
+        </ul>
 
-    {% endif %}
 
-    {% block body %}
-    
-    <p>
-	 Content
-    </p>
-    {% endblock %}
-
+        {% endif %}
+      </nav>
+      <div>
+        {% block body %}
+        
+        <p>
+	     Content
+        </p>
+        {% endblock %}
+      </div>
+    </div>
   </body>
 </html
