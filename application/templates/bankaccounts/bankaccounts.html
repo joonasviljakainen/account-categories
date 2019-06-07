@@ -37,21 +37,21 @@
 {{ error }}
 <form method="POST" action="{{ url_for('bankaccounts') }}">
     <table>
-        <tr>
-            <td>{{ form.name.label }}</td>
-            <td>{{ form.name }}</td>
+        <tr class="form-group">
+            <td>{{ form.name.label(class_="form-control") }}</td>
+            <td>{{ form.name(class_="form-control") }}</td>
         </tr>
-        <tr>
-            <td>{{ form.bank.label }}</td>
-            <td>{{ form.bank }}</td>
+        <tr class="form-group">
+            <td>{{ form.bank.label(class_="form-control") }}</td>
+            <td>{{ form.bank(class_="form-control") }}</td>
         </tr>
-        <tr>
-            <td>{{ form.balance.label }}</td>
-            <td>{{ form.balance }}</td>
+        <tr class="form-group">
+            <td>{{ form.balance.label(class_="form-control") }}</td>
+            <td>{{ form.balance(class_="form-control") }}</td>
         </tr>
-        <tr>
+        <tr class="form-group">
             <td colspan="2">
-                <input type="submit" value="Create bank account" />
+                <input class="form-control" type="submit" value="Create bank account" />
             </td>
         </tr>
     </table>
