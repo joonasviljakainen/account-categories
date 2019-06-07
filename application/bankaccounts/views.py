@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from pprint import pprint
+from decimal import Decimal
 
 from application import app, db
 from application.bankaccounts.models import BankAccount
@@ -61,7 +62,8 @@ def bankaccounts():
     a.user_id = current_user.id
     a.name = form.name.data
     a.bank = form.bank.data
-    a.initial_balance = form.balance.data
+    #a.initial_balance = Decimal(form.balance.data)
+    a.initial_balance = Decimal(form.balance.data)
     a.current_balance = a.initial_balance
 
     db.session().add(a)

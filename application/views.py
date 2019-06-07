@@ -3,6 +3,9 @@ from flask_login import login_required, current_user
 from application import app, db
 from application.transactions.models import Transaction
 from application.transactions.forms import TransactionForm
+from decimal import Decimal
+
+from application.bankaccounts.models import BankAccount
 
 
 @app.route("/")
@@ -15,7 +18,6 @@ def index():
 def get_transactions():
     ts = Transaction.query.filter(Transaction.bankaccount_id.in_(map(lambda bankaccount: bankaccount.id, current_user.bankaccounts)))
     return render_template("transactionlist.html", transactions = ts)
-    #return render_template("transactionlist.html", transactions = Transaction.query.all())
 
 
 @app.route("/transactions/<transaction_id>/", methods=["GET"])
@@ -45,7 +47,7 @@ def transaction_form():
     form.account.choices = [(acc.id, acc.name) for acc in accs]
     return render_template("newtransaction.html", form = form)
 
-# MONETARY FORMATTING
+# MONETARY FORMATTING: string
 def format_number_string(numberString): # TODO move to another module
     split = numberString.split(".")
 
@@ -59,8 +61,6 @@ def format_number_string(numberString): # TODO move to another module
 @app.route("/transactions", methods=["POST"])
 @login_required
 def create_transaction():
-    
-    
     t = Transaction()
     t.transaction_type = "TRANSFER" # Preset pending value determination
     
@@ -81,7 +81,9 @@ def create_transaction():
         print("Authorized")
 
     t.bankaccount_id = requestedAccount
-    t.amount = format_number_string(request.form.get("amount")) # string
+
+    t.amount = Decimal(request.form.get("amount"))
+    #t.amount = format_number_string(request.form.get("amount")) # string
     t.message = request.form.get("message")
     t.credit_or_debit = request.form.get("creditordebit")
     t.counterparty_name = request.form.get("counterparty")
@@ -89,4 +91,16 @@ def create_transaction():
     db.session().add(t)
     db.session().commit()
 
+    # ADDING TRANSACTION SUM TO ACCOUNT BALANCE
+    add_transaction_amount_to_account(t)
+
     return redirect(url_for("get_transactions"))
+
+def add_transaction_amount_to_account(t):
+    account = BankAccount.query.get(t.bankaccount_id)
+    if t.credit_or_debit == "DEBIT":
+        account.current_balance = account.current_balance - t.amount
+    if t.credit_or_debit == "CREDIT":
+        account.current_balance = account.current_balance + t.amount
+
+    db.session().commit()        

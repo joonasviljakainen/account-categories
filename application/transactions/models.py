@@ -13,7 +13,8 @@ class Transaction(db.Model):
     bankaccount_id = db.Column(db.Integer, db.ForeignKey('bankaccount.id'), nullable=False)
 
     counterparty_name = db.Column(db.String(144), nullable=False)
-    amount = db.Column(db.String(10), nullable=False)
+    #amount = db.Column(db.String(10), nullable=False)
+    amount = db.Column(db.Numeric(), nullable=False)
 
     # Type: card, transfer, salary...
     transaction_type = db.Column(db.String(30), nullable=False)
