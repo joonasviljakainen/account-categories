@@ -6,24 +6,24 @@
 <form method="POST" action="{{ url_for('create_user') }}">
     <table>
         <tr>
-            <td>{{ form.displayname.label }}</td>
-            <td>{{ form.displayname }}</td>
+            <td>{{ form.displayname.label(class_="form-control") }}</td>
+            <td>{{ form.displayname(class_="form-control") }}</td>
         </tr>
         <tr>
-            <td>{{ form.username.label }}</td>
-            <td>{{ form.username }}</td>
+            <td>{{ form.username.label(class_="form-control") }}</td>
+            <td>{{ form.username(class_="form-control") }}</td>
         </tr>
         <tr>
-            <td>{{ form.password.label }}</td>
-            <td>{{ form.password }}</td>
+            <td>{{ form.password.label(class_="form-control") }}</td>
+            <td>{{ form.password(class_="form-control") }}</td>
         </tr>
         <tr>
-            <td>{{ form.pwdvalidation.label }}</td>
-            <td>{{ form.pwdvalidation }}</td>
+            <td>{{ form.pwdvalidation.label(class_="form-control") }}</td>
+            <td>{{ form.pwdvalidation(class_="form-control") }}</td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Create user" />
+                <input class="form-control" type="submit" value="Create user" />
             </td>
         </tr>
     </table>
