@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1>Categories</h1>
+<table>
+
+
+    {% for category in categories %}
+    <tr>
+        <td>{{ category.name }}</td>
+        <td>
+            <form method="POST" action="{{ url_for('delete_category', category_id=category.id) }}">
+                <button type="submit">Remove category</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+    <h3>Add a category</h3>
+    <form method="POST" action="{{ url_for('categories') }}">
+        <input name="name" Placeholder/>
+        <button type="submit">Add category</button>
+    </form>
+
+{% endblock %}

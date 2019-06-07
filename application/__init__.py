@@ -28,6 +28,10 @@ from application.auth import views
 from application.bankaccounts import models
 from application.bankaccounts import views
 
+# Categories
+from application.categories import models
+from application.categories import views
+
 # Login
 from application.auth.models import User
 from os import urandom

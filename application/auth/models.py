@@ -12,6 +12,7 @@ class User(db.Model):
     password = db.Column(db.String(144), nullable=False)
 
     bankaccounts = db.relationship("BankAccount", backref="bankaccount", lazy =True)
+    categories = db.relationship("Category", backref="category", lazy=True)
 
     def __init__(self, name, username, password):
         self.name = name

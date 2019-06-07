@@ -23,8 +23,6 @@ def delete_bankaccount(bankaccount_id):
     acc = BankAccount.query.filter_by(id=bankaccount_id).first()
 
     if u.id == acc.user_id:
-        print("FOUND, DELETING ACCOUNT " + str(acc.id))
-
         db.session.delete(acc)
         db.session.commit()
 
