@@ -79,6 +79,17 @@
                 </ul>
             </td>
         </tr>
+        <tr>
+            <td>{{ form.category.label }}</td>
+            <td>{{ form.category }}</td>
+            <td>
+                <ul>    
+                {% for error in form.category.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
     </table>
     <div><input type="submit" value="Submit transaction" /></div>
 

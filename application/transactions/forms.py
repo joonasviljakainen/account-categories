@@ -17,6 +17,8 @@ class TransactionForm(FlaskForm):
     creditordebit = SelectField("Payment to you or by you?", choices=[("CREDIT", "To me"), ("DEBIT", "By me")])
     account = SelectField("Account")
 
+    category = SelectField("Category")
+
 
     class Meta:
         csrf = False

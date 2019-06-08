@@ -23,7 +23,9 @@ def get_transactions():
 @app.route("/transactions/<transaction_id>/", methods=["GET"])
 @login_required
 def get_transaction(transaction_id):
-    return render_template("transaction.html", transaction = Transaction.query.get(transaction_id))
+    t = Transaction.get_transaction_and_category(transaction_id)
+    return render_template("transaction.html", transaction = t)
+    #return render_template("transaction.html", transaction = Transaction.query.get(transaction_id))
 
 
 @app.route("/transactions/<transaction_id>/", methods=["POST"])
@@ -43,8 +45,10 @@ def transaction_form():
 
     form = TransactionForm()
     accs = current_user.bankaccounts
+    cats = current_user.categories
     
     form.account.choices = [(acc.id, acc.name) for acc in accs]
+    form.category.choices = [(cat.id, cat.name) for cat in cats]
     return render_template("newtransaction.html", form = form)
 
 # MONETARY FORMATTING: string
@@ -85,6 +89,7 @@ def create_transaction():
     t.message = request.form.get("message")
     t.credit_or_debit = request.form.get("creditordebit")
     t.counterparty_name = request.form.get("counterparty")
+    t.category_id = request.form.get("category")
 
     db.session().add(t)
     db.session().commit()
@@ -92,7 +97,9 @@ def create_transaction():
     # ADDING TRANSACTION SUM TO ACCOUNT BALANCE
     add_transaction_amount_to_account(t)
 
-    return redirect(url_for("get_transactions"))
+    # Redirect to view with new transaction
+    return redirect(url_for("get_transaction", transaction_id=t.id))
+    #return redirect(url_for("get_transactions"))
 
 def add_transaction_amount_to_account(t):
     account = BankAccount.query.get(t.bankaccount_id)
@@ -101,4 +108,4 @@ def add_transaction_amount_to_account(t):
     if t.credit_or_debit == "CREDIT":
         account.current_balance = account.current_balance + t.amount
 
-    db.session().commit()        
+    db.session().commit()      

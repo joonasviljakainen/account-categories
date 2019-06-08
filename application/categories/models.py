@@ -8,6 +8,6 @@ class Category(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
-    #transactions = db.relationship("Transaction", backref="transaction", lazy = True)
+    categoryTransactions = db.relationship("Transaction", backref="transact", lazy = True)
 
     # TODO: Add connection to counterparties
