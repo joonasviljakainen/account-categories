@@ -76,14 +76,12 @@ def create_transaction():
         # Account not owned by userprint("Wrong move, buster")
         # TODO inform user of this
         return redirect("/")
-    else:
-        # Account owned by user
-        print("Authorized")
+
+    #AUTHOROZED
 
     t.bankaccount_id = requestedAccount
 
     t.amount = Decimal(request.form.get("amount"))
-    #t.amount = format_number_string(request.form.get("amount")) # string
     t.message = request.form.get("message")
     t.credit_or_debit = request.form.get("creditordebit")
     t.counterparty_name = request.form.get("counterparty")
