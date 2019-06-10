@@ -2,20 +2,22 @@
 
 {% block body %}
 
+<h1>New transaction</h1>
+
 <form method="POST" action="{{url_for('create_transaction')}}">
     <table>
-        <tr>
+        <tr class="form-group">
             <td>
-                {{ form.amount.label }}
+                {{ form.amount.label(class_="form-control") }}
             </td>
             <td>
-                {{ form.amount }}
+                {{ form.amount(class_="form-control") }}
             </td>
             <td>
         </tr>
-        <tr>
-            <td>{{ form.bookingdate.label }}</td>
-            <td>{{ form.bookingdate }}</td>
+        <tr class="form-group">
+            <td>{{ form.bookingdate.label(class_="form-control") }}</td>
+            <td>{{ form.bookingdate(class_="form-control") }}</td>
             <td>
                 <ul>
                     {% for error in form.bookingdate.errors %}
@@ -24,9 +26,9 @@
                 </ul>
             </td>
         </tr>
-        <tr>
-            <td>{{ form.counterparty.label }}</td>
-            <td>{{ form.counterparty }}</td>
+        <tr class="form-group">
+            <td>{{ form.counterparty.label(class_="form-control") }}</td>
+            <td>{{ form.counterparty(class_="form-control") }}</td>
             <td>
                 <ul>
                     {% for error in form.counterparty.errors %}
@@ -35,9 +37,9 @@
                 </ul>
             </td>
         </tr>
-        <tr>
-            <td>{{ form.iban.label }}</td>
-            <td>{{ form.iban }}</td>
+        <tr class="form-group">
+            <td>{{ form.iban.label(class_="form-control") }}</td>
+            <td>{{ form.iban(class_="form-control") }}</td>
             <td>
                 <ul>
                     {% for error in form.iban.errors %}
@@ -46,9 +48,9 @@
                 </ul>
             </td>
         </tr>
-        <tr>
-            <td>{{ form.message.label }}</td>
-            <td>{{ form.message }}</td>
+        <tr class="form-group">
+            <td>{{ form.message.label(class_="form-control") }}</td>
+            <td>{{ form.message(class_="form-control") }}</td>
             <td>
                 <ul>
                     {% for error in form.message.errors %}
@@ -57,9 +59,9 @@
                 </ul>
             </td>
         </tr>
-        <tr>
-            <td>{{ form.creditordebit.label }}</td>
-            <td>{{ form.creditordebit }}</td>
+        <tr class="form-group">
+            <td>{{ form.creditordebit.label(class_="form-control") }}</td>
+            <td>{{ form.creditordebit(class_="form-control") }}</td>
             <td>
                 <ul>    
                 {% for error in form.creditordebit.errors %}
@@ -68,9 +70,9 @@
                 </ul>
             </td>
         </tr>
-        <tr>
-            <td>{{ form.account.label }}</td>
-            <td>{{ form.account }}</td>
+        <tr class="form-group">
+            <td>{{ form.account.label(class_="form-control") }}</td>
+            <td>{{ form.account(class_="form-control") }}</td>
             <td>
                 <ul>    
                 {% for error in form.account.errors %}
@@ -79,9 +81,9 @@
                 </ul>
             </td>
         </tr>
-        <tr>
-            <td>{{ form.category.label }}</td>
-            <td>{{ form.category }}</td>
+        <tr class="form-group">
+            <td>{{ form.category.label(class_="form-control") }}</td>
+            <td>{{ form.category(class_="form-control") }}</td>
             <td>
                 <ul>    
                 {% for error in form.category.errors %}

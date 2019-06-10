@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h2>{{ account.name }}</h2>
+<h1>{{ account.name }}</h1>
 <table>
     <tr>
         <td>Name</td>
@@ -18,12 +18,16 @@
         <td>{{ account.bank }}</td>
     </tr>
     <tr>
-        <td>Balance</td>
-        <td>{{ account.balance }}</td>
+        <td>Current Balance</td>
+        <td>{{ account.current_balance }}</td>
+    </tr>
+    <tr>
+        <td>Initial Balance</td>
+        <td>{{ account.initial_balance }}</td>
     </tr>
 </table>
 
-<h3>Account transactions</h3>
+<h2>Account transactions</h2>
 <table>
     <tr>
         <th>Booking Date</th>
@@ -32,6 +36,8 @@
         <th>Amount</th>
         <th>Message or Refnum</th>
         <th>Transaction Type</th>
+        <th>Transaction Category</th>
+        <th>Change category</th>
     </tr>
     {% for transaction in transactions %}
     <tr>
@@ -42,9 +48,25 @@
         </td>
         <td>{{ transaction.counterparty_name }}</td>
         <td>{{ transaction.credit_or_debit }}</td>
-        <td>{{ transaction.amount }}</td>
+
+        {% if transaction.credit_or_debit == "CREDIT" %}
+        <td style="color:green">{{ transaction.amount }}</td>
+        {% else %}
+        <td style="color:red">-{{ transaction.amount }}</td>
+        {% endif %}
+
         <td>{{ transaction.message }}</td>
         <td>{{ transaction.transaction_type }}</td>
+        <td><a href="{{ url_for('category', category_id=transaction.category_id) }}">{{ transaction.category_name }}</a></td>
+        <td>
+            <form method="POST" action="{{ url_for('set_transaction_category', transaction_id=transaction.id)  }}">
+                <span>{{ form.category.label }}</span>
+                <span>{{ form.category }}</span>
+                <span>{{ form.submit }}</span>
+                <span>{{ form.account }}</span>
+                
+        </form>
+        </td>
 
     </tr>
     {% endfor %}

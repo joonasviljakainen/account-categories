@@ -19,9 +19,20 @@
 </table>
 
     <h3>Add a category</h3>
-    <form method="POST" action="{{ url_for('categories') }}">
-        <input name="name" Placeholder/>
-        <button type="submit">Add category</button>
+    <form method="POST" action="{{ url_for('categories') }}" >
+        <tr class="form-group">
+            <td>{{ form.name.label(class_="form-control") }}</td>
+            <td>{{ form.name(class_="form-control") }}</td>
+            <td><button class="form-control" type="submit">Add category</button></td>
+            <td>
+                <ul>
+                    {% for error in form.name.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
     </form>
+
 
 {% endblock %}

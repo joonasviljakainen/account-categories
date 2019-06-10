@@ -5,14 +5,8 @@ from sqlalchemy.sql import text
 class Transaction(Base):
     __tablename__ = "transact"
 
-    #id = db.Column(db.Integer, primary_key=True)
-    
-    #created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    #modified_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
     booking_date = db.Column(db.Date, default=db.func.current_timestamp())
     value_date = db.Column(db.Date, default=db.func.current_timestamp())
-    #user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     bankaccount_id = db.Column(db.Integer, db.ForeignKey('bankaccount.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 
@@ -30,16 +24,10 @@ class Transaction(Base):
                     " LEFT JOIN Category ON transact.category_id = Category.id"
                     " WHERE transact.id = :transaction_id").params(transaction_id=transaction_id)
 
-        #stmt = text("SELECT * FROM transact"
-        #            " WHERE transact.id = :transaction_id").params(transaction_id=transaction_id)
-
         res = db.engine.execute(stmt)
         response = []
         for r in res:
 
-        #r = res[0]
-
-        #response = {
             response.append({
             "id" : r[0],
             "created_at" : r[1],

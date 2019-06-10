@@ -7,7 +7,6 @@
 <h1>Accounts</h1>
 <table>
     <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>Bank</th>
         <th>Initial Balance</th>
@@ -17,10 +16,9 @@
     <tr>
         <td>
             <a href="{{ url_for('get_bankaccount', bankaccount_id=account.id) }}">
-                {{ account.id }}
+                {{ account.name }}
             </a>
         </td>
-        <td>{{ account.name }}</td>
         <td>{{ account.bank }}</td>
         <td>{{ account.initial_balance }}</td>
         <td>{{ account.current_balance }}</td>

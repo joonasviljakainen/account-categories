@@ -6,15 +6,19 @@ from decimal import Decimal
 from application import app, db
 from application.bankaccounts.models import BankAccount
 from application.bankaccounts.forms import AccountForm
+from application.categories.forms import CategoryUpdateForm
 
 @app.route("/bankaccounts/<bankaccount_id>")
 @login_required
 def get_bankaccount(bankaccount_id):
     print(bankaccount_id)
+    transactions = BankAccount.get_transactions_and_categories(bankaccount_id)
     bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
     if current_user.id == bankaccount.user_id:
-        print("FOUND")
-        return render_template("/bankaccounts/singlebankaccount.html", account = bankaccount, transactions=bankaccount.transactions)
+        cats = current_user.categories
+        categoryForm = CategoryUpdateForm(request.values, account=bankaccount_id)
+        categoryForm.category.choices = [("", "---")]+[(cat.id, cat.name) for cat in cats]
+        return render_template("/bankaccounts/singlebankaccount.html", account = bankaccount, transactions = transactions, form = categoryForm)
 
 
 @app.route("/bankaccounts/<bankaccount_id>/deletion", methods = ["POST"])
@@ -52,17 +56,11 @@ def bankaccounts():
 
     form = AccountForm(request.form)
     ## TODO validations
-
-    #TODO: Check whether something like this exists 
-    #  account = BankAccount.query.filter_by()
-
     
-    print("Creating bank account with name " + form.name.data)
     a = BankAccount()
     a.user_id = current_user.id
     a.name = form.name.data
     a.bank = form.bank.data
-    #a.initial_balance = Decimal(form.balance.data)
     a.initial_balance = Decimal(form.balance.data)
     a.current_balance = a.initial_balance
 

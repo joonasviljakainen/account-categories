@@ -10,8 +10,12 @@ from application.categories.forms import CategoryForm
 def categories():
     if request.method == "GET":
         categories = Category.query.filter_by(user_id=current_user.id)
-        return render_template("/categories/categories.html", categories=categories)
+        return render_template("/categories/categories.html",
+            categories=categories, 
+            form=CategoryForm())
     else:
+        #if form.name.data == "":
+        #    return
         form = CategoryForm(request.form)
         c = Category()
         c.name = form.name.data
@@ -35,3 +39,8 @@ def delete_category(category_id):
         return redirect(url_for("categories"))
     
     return "Not found"
+
+@app.route("/categories/<category_id>")
+@login_required
+def category(category_id):
+    return "NOT IMPLEMENTED YET " + category_id
