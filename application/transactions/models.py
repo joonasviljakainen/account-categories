@@ -19,10 +19,30 @@ class Transaction(Base):
     credit_or_debit = db.Column(db.String(6), nullable=False)
 
     @staticmethod
+    def get_sum_of_debit_transactions_by_category(bankaccount_id):
+        stmt = text("SELECT sum(transact.amount) AS amount, category.name, category.id FROM transact"
+                    " LEFT JOIN category ON transact.category_id = category.id"
+                    " WHERE (transact.credit_or_debit = 'DEBIT' AND transact.bankaccount_id = :bankaccount_id)"
+                    " GROUP BY category.name").params(bankaccount_id=bankaccount_id)
+
+        res = db.engine.execute(stmt)
+        response = []
+        for r in res:
+            response.append({
+                "amount": r[0],
+                "name": r[1],
+                "id": r[2]
+            })
+
+        return response
+
+        
+
+    @staticmethod
     def get_transaction_and_category(transaction_id):
         stmt = text("SELECT * FROM transact"
                     " LEFT JOIN Category ON transact.category_id = Category.id"
-                    " WHERE transact.id = :transaction_id").params(transaction_id=transaction_id)
+                    " WHERE (transact.id = :transaction_id)").params(transaction_id=transaction_id)
 
         res = db.engine.execute(stmt)
         response = []

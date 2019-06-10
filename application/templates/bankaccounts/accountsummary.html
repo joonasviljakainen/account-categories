@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1>{{ account.name }}</h1>
+<table>
+    <th>
+        <tr>
+        <td>Category name</td>
+        <td>Sum of transactions</td>
+    </tr>
+    </th>
+{% for category in summary %}
+<tr>
+    <td>{{ category.name }}</td>
+    <td>{{ category.amount }}</td>
+</tr>
+
+{% endfor %}
+</table>
+{% endblock %}

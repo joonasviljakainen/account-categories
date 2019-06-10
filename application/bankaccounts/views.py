@@ -7,11 +7,11 @@ from application import app, db
 from application.bankaccounts.models import BankAccount
 from application.bankaccounts.forms import AccountForm
 from application.categories.forms import CategoryUpdateForm
+from application.transactions.models import Transaction
 
 @app.route("/bankaccounts/<bankaccount_id>")
 @login_required
 def get_bankaccount(bankaccount_id):
-    print(bankaccount_id)
     transactions = BankAccount.get_transactions_and_categories(bankaccount_id)
     bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
     if current_user.id == bankaccount.user_id:
@@ -19,6 +19,18 @@ def get_bankaccount(bankaccount_id):
         categoryForm = CategoryUpdateForm(request.values, account=bankaccount_id)
         categoryForm.category.choices = [("", "---")]+[(cat.id, cat.name) for cat in cats]
         return render_template("/bankaccounts/singlebankaccount.html", account = bankaccount, transactions = transactions, form = categoryForm)
+
+@app.route("/bankaccounts/<bankaccount_id>/summary")
+@login_required
+def get_bankaccount_summary(bankaccount_id):
+
+    bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
+    if bankaccount.user_id != current_user.id:
+        return "Unauthorized"
+
+    summarydata = Transaction.get_sum_of_debit_transactions_by_category(bankaccount_id)
+    print(summarydata)
+    return render_template("/bankaccounts/accountsummary.html", account=bankaccount, summary=summarydata)
 
 
 @app.route("/bankaccounts/<bankaccount_id>/deletion", methods = ["POST"])

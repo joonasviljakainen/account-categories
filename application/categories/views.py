@@ -33,6 +33,9 @@ def delete_category(category_id):
     cat = Category.query.filter_by(id=category_id).first()
 
     if u.id == cat.user_id:
+
+        #TODO: remove this category from all transactions
+
         db.session.delete(cat)
         db.session.commit()
         

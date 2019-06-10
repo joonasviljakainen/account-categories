@@ -2,6 +2,7 @@
 
 {% block body %}
 <h1>{{ account.name }}</h1>
+<h4><a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id)}}">See category summary for this account</a></h4>
 <table>
     <tr>
         <td>Name</td>
