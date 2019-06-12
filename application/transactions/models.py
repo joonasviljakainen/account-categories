@@ -24,7 +24,8 @@ class Transaction(Base):
                     " LEFT JOIN category ON transact.category_id = category.id"
                     " WHERE ((transact.credit_or_debit = 'DEBIT' AND transact.bankaccount_id = :bankaccount_id)"
                     " AND  (transact.booking_date BETWEEN :start_date AND :end_date))"
-                    " GROUP BY category.name").params(bankaccount_id=bankaccount_id, start_date=start_date, end_date=end_date)
+                    " GROUP BY category.id, category.name"
+                    " ORDER BY category.name").params(bankaccount_id=bankaccount_id, start_date=start_date, end_date=end_date)
         res = db.engine.execute(stmt)
         response = []
         for r in res:
