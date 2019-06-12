@@ -6,6 +6,7 @@ from application.transactions.forms import TransactionForm
 from application.categories.forms import CategoryUpdateForm
 from application.categories.models import Category
 from decimal import Decimal
+import datetime
 
 from application.bankaccounts.models import BankAccount
 
@@ -115,6 +116,11 @@ def create_transaction():
     t.credit_or_debit = request.form.get("creditordebit")
     t.counterparty_name = request.form.get("counterparty")
     t.category_id = request.form.get("category")
+
+    booking_date = datetime.datetime.strptime(request.form.get("bookingdate"), "%Y-%m-%d")
+    #booking_date = datetime.datetime(request.form.get("bookingdate"))
+    print(booking_date)
+    t.booking_date = booking_date
 
     db.session().add(t)
     db.session().commit()

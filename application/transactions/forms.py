@@ -6,7 +6,7 @@ from re import RegexFlag
 class TransactionForm(FlaskForm):
 
     amount = DecimalField('Transaction amount (with two decimals, e.g. "34.56")', places=2, validators=[validators.NumberRange(min=0, max=100000000)], default=0.00 )
-    bookingdate = DateField("Booking date", format="dd/mm/YYYY")
+    bookingdate = DateField("Booking date", format="%d/%m/%Y", validators=[validators.InputRequired(True)])
     counterparty = StringField("Name of counterparty", [validators.InputRequired(True)]) 
     
     iban = StringField("IBAN of counterparty", [
