@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from pprint import pprint
 from decimal import Decimal
+from datetime import datetime
 
 from application import app, db
 from application.bankaccounts.models import BankAccount
@@ -24,13 +25,46 @@ def get_bankaccount(bankaccount_id):
 @login_required
 def get_bankaccount_summary(bankaccount_id):
 
+    period = request.args.get("period")
+    active = period
+    print(period)
+
+    #today = datetime.today()
+    now = datetime.now()
+
+    if period == "mtd":
+        start_date = datetime(now.year, now.month, 1)
+        end_date = now
+        print("Month to date")
+    elif period == "year":
+        start_date = datetime(now.year - 1, now.month, now.day)
+        end_date = now
+        print("365 days")
+    elif period == "ytd":
+        start_date = datetime(now.year, 1, 1)
+        end_date = now
+        print("year to date")
+    elif period == "all":
+        start_date = datetime(1970, 1, 1)
+        end_date = now
+        print("all time")
+    elif period == "test":
+        start_date = datetime(now.year, now.month, 5)
+        end_date = now
+        print("all time")
+    else:
+        start_date = datetime(now.year, now.month, 1)
+        end_date = now
+        active="mtd"
+        print("month to date")
+
     bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
     if bankaccount.user_id != current_user.id:
         return "Unauthorized"
 
-    summarydata = Transaction.get_sum_of_debit_transactions_by_category(bankaccount_id)
+    summarydata = Transaction.get_sum_of_debit_transactions_by_category(bankaccount_id, start_date, end_date)
     print(summarydata)
-    return render_template("/bankaccounts/accountsummary.html", account=bankaccount, summary=summarydata)
+    return render_template("/bankaccounts/accountsummary.html", account=bankaccount, summary=summarydata, active=active)
 
 
 @app.route("/bankaccounts/<bankaccount_id>/deletion", methods = ["POST"])

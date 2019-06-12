@@ -19,12 +19,28 @@ class Transaction(Base):
     credit_or_debit = db.Column(db.String(6), nullable=False)
 
     @staticmethod
-    def get_sum_of_debit_transactions_by_category(bankaccount_id):
+    def get_sum_of_debit_transactions_by_category(bankaccount_id, start_date, end_date):
+        stmt = text("SELECT sum(transact.amount) AS amount, category.name, category.id FROM transact"
+                    " LEFT JOIN category ON transact.category_id = category.id"
+                    " WHERE ((transact.credit_or_debit = 'DEBIT' AND transact.bankaccount_id = :bankaccount_id)"
+                    " AND  (transact.booking_date BETWEEN :start_date AND :end_date))"
+                    " GROUP BY category.name").params(bankaccount_id=bankaccount_id, start_date=start_date, end_date=end_date)
+        res = db.engine.execute(stmt)
+        response = []
+        for r in res:
+            response.append({
+                "amount": r[0],
+                "name": r[1],
+                "id": r[2],
+            })
+        return response
+
+    @staticmethod
+    def get_sum_of_debit_transactions_by_category_withboundingdate(bankaccount_id):
         stmt = text("SELECT sum(transact.amount) AS amount, category.name, category.id FROM transact"
                     " LEFT JOIN category ON transact.category_id = category.id"
                     " WHERE (transact.credit_or_debit = 'DEBIT' AND transact.bankaccount_id = :bankaccount_id)"
                     " GROUP BY category.name").params(bankaccount_id=bankaccount_id)
-
         res = db.engine.execute(stmt)
         response = []
         for r in res:
@@ -33,7 +49,6 @@ class Transaction(Base):
                 "name": r[1],
                 "id": r[2]
             })
-
         return response
 
         

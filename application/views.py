@@ -118,8 +118,6 @@ def create_transaction():
     t.category_id = request.form.get("category")
 
     booking_date = datetime.datetime.strptime(request.form.get("bookingdate"), "%Y-%m-%d")
-    #booking_date = datetime.datetime(request.form.get("bookingdate"))
-    print(booking_date)
     t.booking_date = booking_date
 
     db.session().add(t)
