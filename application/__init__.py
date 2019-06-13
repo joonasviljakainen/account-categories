@@ -1,6 +1,10 @@
 from flask import Flask
 import os
+from flask_bcrypt import Bcrypt
+
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
+
 
 # SQLALCHEMY
 from flask_sqlalchemy import SQLAlchemy

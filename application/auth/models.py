@@ -4,10 +4,6 @@ from application.models import Base
 class User(Base):
     __tablename__ = "account"
 
-    #id = db.Column(db.Integer, primary_key=True)
-    #date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    #date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
-
     name=db.Column(db.String(144), nullable=False)
     username = db.Column(db.String(144), nullable=False)
     password = db.Column(db.String(144), nullable=False)

@@ -1,10 +1,11 @@
 from flask import render_template, request, redirect, url_for
 from flask_login import login_user, logout_user
 
-from application import app, db
+from application import app, db, bcrypt
 from application.auth.models import User
 from application.auth.forms import LoginForm, CreateUserForm
 from application.categories.models import Category
+#from flask_bcrypt import Bcrypt
 
 # LOGIN FORM AND LOGIN
 @app.route("/auth/login", methods = ["GET", "POST"])
@@ -15,9 +16,9 @@ def auth_login():
     form = LoginForm(request.form)
     ## TODO validation
 
-    user = User.query.filter_by(username=form.username.data, password=form.password.data).first()
+    user = User.query.filter_by(username=form.username.data).first()
 
-    if not user:
+    if not user or not bcrypt.check_password_hash(user.password, form.password.data):
         return render_template("/auth/loginform.html", form = form, error = "No such username or password!")
 
     print("User " + user.name + " authenticated")
@@ -42,11 +43,11 @@ def create_user():
     if not user:
 
         username = form.username.data
-        password = form.password.data ## CHANGE TO BE BCRYPTED
+        passwordHash = bcrypt.generate_password_hash(form.password.data) ## CHANGE TO BE BCRYPTED
         name = form.displayname.data
         
         # New user
-        u = User(name, username, password)
+        u = User(name, username, passwordHash)
         db.session().add(u)
         db.session().commit()
 
