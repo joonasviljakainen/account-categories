@@ -11,3 +11,16 @@ class Category(db.Model):
     categoryTransactions = db.relationship("Transaction", backref="transact", lazy = True)
 
     # TODO: Add connection to counterparties
+
+    @staticmethod
+    def create_default_categories(user_id):
+        defaultCategories = ["Rent", "Groceries", "Restaurants", "Drinking", "Entertainment", "Commuting", "Travel"]
+
+        for cat in defaultCategories:
+
+            c = Category()
+            c.user_id = user_id
+            c.name = cat
+            db.session().add(c)
+        
+        db.session().commit()

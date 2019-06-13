@@ -1,7 +1,11 @@
 {% extends "layout.html"%}
 
 {% block body %}
-{{ error }}
+
+<h1>Sign up</h1>
+<p>Sign up to Pivo-Slayer to start using our magnificent service. We'll even provide a few basic categories for you, ready for use!</p>
+
+<p style="color: red">{{ error }}</p>
 
 <form method="POST" action="{{ url_for('create_user') }}">
     <table>
