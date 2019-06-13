@@ -13,7 +13,6 @@ As a user, I want to...
 | Business / Core | User | Create and add transactions to each account | Inspect my transactions by account and analyze spending | Required | Done |
 | Business / Core | User | See my current account balance, calculated from transactions | See how much money I have | Required | Done |
 | Business / Core | User | Set categories for my transactions | I can analyze which types of spending dominate my cash flows | Required | In Progess (category table created) |
-| Business / Core | User | See a summary of my transactions per account by week, month, day, year | I can see if I'm spending more than I earn | Required | In Progress |
 | Business / Core | User | See a summary of my transactions per category by week, month, day, year | I can see what I'm spending money on | Required | In Progress |
 | Business / Core | User | Automatically update the category for all transactions of the same type (Credit vs debit) with a counterparty when I set a category for one transaction (I want to choose whether all should be updated) | I can categorize transactions more easily and semi-automatically | Required | To Do |
 | Business | User | Have a default category set for new transactions in the case of pre-existing transactions with the same counterparty | Categorization is effortless | Required | To Do|
