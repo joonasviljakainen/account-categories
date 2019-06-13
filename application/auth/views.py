@@ -42,7 +42,7 @@ def create_user():
     if not user:
 
         username = form.username.data
-        passwordHash = bcrypt.generate_password_hash(form.password.data) ## CHANGE TO BE BCRYPTED
+        passwordHash = bcrypt.generate_password_hash(form.password.data).decode("utf-8") ## CHANGE TO BE BCRYPTED
         name = form.displayname.data
         
         # New user
