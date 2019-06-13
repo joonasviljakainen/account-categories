@@ -19,9 +19,8 @@ def auth_login():
     user = User.query.filter_by(username=form.username.data).first()
 
     if not user or not bcrypt.check_password_hash(user.password, form.password.data):
-        return render_template("/auth/loginform.html", form = form, error = "No such username or password!")
+        return render_template("/auth/loginform.html", form = form, error = "Incorrect username or password!")
 
-    print("User " + user.name + " authenticated")
     login_user(user)
     return redirect(url_for("index"))
 

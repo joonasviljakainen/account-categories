@@ -7,7 +7,7 @@ As a user, I want to...
 | Theme | As a ...| ...I want to... | ...so that...| Priority | Status |
 |-|-|-|-|-|-|
 | Accounts & signing up  | User | I want to be able to create a user account and sign in with it | I can begin adding bank accounts and transactions | Required | Done |
-| Accounts & signing up  | System developer | I want be sure that the system uses password hashing | I can protect users from the dangers of database leaks | Required | To Do |
+| Accounts & signing up  | System developer | I want be sure that the system uses password hashing | I can protect users from the dangers of database leaks | Required | Done 13.6. |
 | Accounts & administration  | Admin | See a summary of the number of users on the service (and clear the database given Heroku's row limitation) | I can validate my development progress and manage the application | Required | To Do |
 | Business / Core | User | Create a bank account | I can have my transactions sorted by account | required | Done |
 | Business / Core | User | Create and add transactions to each account | Inspect my transactions by account and analyze spending | Required | Done |

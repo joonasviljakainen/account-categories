@@ -7,22 +7,29 @@ from application.categories.forms import CategoryForm
 
 @app.route("/categories", methods = ["GET", "POST"])
 @login_required
-def categories():
+def categories(*args, **kwargs):
     if request.method == "GET":
         categories = Category.query.filter_by(user_id=current_user.id)
+        error = kwargs.get("error", "")
         return render_template("/categories/categories.html",
             categories=categories, 
-            form=CategoryForm())
+            form=CategoryForm(),
+            error=error)
     else:
-        #if form.name.data == "":
-        #    return
         form = CategoryForm(request.form)
+
+        # If the user already has a category by that name, let's not create a duplicate
+        alreadyExists = db.session.query(db.exists().where(Category.name == form.name.data).where(Category.user_id == current_user.id)).scalar()
+
+        if alreadyExists:
+            return redirect(url_for('categories', error=1))
+        
         c = Category()
         c.name = form.name.data
         c.user_id = current_user.id
         db.session().add(c)
         db.session().commit()
-        return redirect(url_for('categories'))
+        return redirect(url_for('categories', error=""))
 
 
 @app.route("/categories/<category_id>/deletions", methods=["POST"])
@@ -33,13 +40,11 @@ def delete_category(category_id):
     cat = Category.query.filter_by(id=category_id).first()
 
     if u.id == cat.user_id:
-
         #TODO: remove this category from all transactions
 
         db.session.delete(cat)
         db.session.commit()
-        
-        return redirect(url_for("categories"))
+        return redirect(url_for("categories", error=""))
     
     return "Not found"
 

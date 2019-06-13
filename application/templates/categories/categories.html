@@ -3,6 +3,7 @@
 {% block body %}
 
 <h1>Categories</h1>
+<p style="color: red">{{error}}</p>
 <table>
 
 
@@ -19,7 +20,7 @@
 </table>
 
     <h3>Add a category</h3>
-    <form method="POST" action="{{ url_for('categories') }}" >
+    <form method="POST" action="{{ url_for('categories', error='') }}" >
         <tr class="form-group">
             <td>{{ form.name.label(class_="form-control") }}</td>
             <td>{{ form.name(class_="form-control") }}</td>
