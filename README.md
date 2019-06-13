@@ -13,6 +13,15 @@ Pivo-Slayer is a database app that will allow users to import account transactio
 
 The aim is to allow category-based spending analysis on a monthly and/or weekly basis to help users understand their cash flow and plan their personal economy.
 
+### Testing
+
+Create a new user profile if you would like to start from stratch, or use the following credentials:
+
+| Attribute | Value |
+|:-|:-|
+| Username | jones |
+| Password | jones |
+
 ### User stories
 
 See [User stories](/documentation/stories.md).
