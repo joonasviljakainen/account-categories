@@ -51,6 +51,8 @@ Run the application:
 
 Now navigate to `localhost:5000`.
 
+[Instructions for use](/documentation/instructions.md)
+
 ### Database architecture
 
 See [Database Architecture](/documentation/databaseArchitecture.md)
