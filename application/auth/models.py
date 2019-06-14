@@ -11,6 +11,8 @@ class User(Base):
     bankaccounts = db.relationship("BankAccount", backref="bankaccount", lazy =True)
     categories = db.relationship("Category", backref="category", lazy=True)
 
+    role = db.Column(db.String(15), nullable=False)
+
     def __init__(self, name, username, password):
         self.name = name
         self.username = username
@@ -27,3 +29,6 @@ class User(Base):
     
     def is_authenticated(self):
         return True
+
+    def get_role(self):
+        return self.role

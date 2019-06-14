@@ -14,7 +14,7 @@ class Category(db.Model):
 
     @staticmethod
     def create_default_categories(user_id):
-        defaultCategories = ["Rent", "Groceries", "Restaurants", "Drinking", "Entertainment", "Commuting", "Travel"]
+        defaultCategories = ["Rent", "Groceries", "Restaurants", "Drinking", "Entertainment", "Commuting", "Travel", "No Category"]
 
         for cat in defaultCategories:
 

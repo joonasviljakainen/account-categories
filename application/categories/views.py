@@ -1,12 +1,12 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user
 
-from application import app, db
+from application import app, db, login_required
 from application.categories.models import Category
 from application.categories.forms import CategoryForm
 
 @app.route("/categories", methods = ["GET", "POST"])
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def categories(*args, **kwargs):
     if request.method == "GET":
         categories = Category.query.filter_by(user_id=current_user.id)
@@ -33,7 +33,7 @@ def categories(*args, **kwargs):
 
 
 @app.route("/categories/<category_id>/deletions", methods=["POST"])
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def delete_category(category_id):
 
     u = current_user
@@ -49,6 +49,6 @@ def delete_category(category_id):
     return "Not found"
 
 @app.route("/categories/<category_id>")
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def category(category_id):
     return "NOT IMPLEMENTED YET " + category_id

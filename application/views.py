@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
-from application import app, db
+from flask_login import current_user
+from application import app, db, login_required
 from application.transactions.models import Transaction
 from application.transactions.forms import TransactionForm
 from application.categories.forms import CategoryUpdateForm
@@ -17,7 +17,7 @@ def index():
 
 
 @app.route("/transactions")
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def get_transactions():
     categoryForm = CategoryUpdateForm()
     ts = Transaction.query.filter(Transaction.bankaccount_id.in_(map(lambda bankaccount: bankaccount.id, current_user.bankaccounts)))
@@ -25,14 +25,14 @@ def get_transactions():
 
 
 @app.route("/transactions/<transaction_id>/", methods=["GET"])
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def get_transaction(transaction_id):
     categoryForm = CategoryUpdateForm()
     t = Transaction.get_transaction_and_category(transaction_id)
     return render_template("transaction.html", transaction = t, form = categoryForm)
 
 @app.route("/transactions/<transaction_id>/", methods=["POST"])
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def modify_transaction(transaction_id):
 
     t = Transaction.query.get(transaction_id)
@@ -42,7 +42,7 @@ def modify_transaction(transaction_id):
     return redirect(url_for("get_transaction", transaction_id=t.id))
 
 @app.route("/transactions/<transaction_id>/categories", methods=["POST"])
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def set_transaction_category(transaction_id):
     f = CategoryUpdateForm(request.form)
     if f.account.data == 0:
@@ -66,7 +66,7 @@ def set_transaction_category(transaction_id):
 
 
 @app.route("/transactions/new")
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def transaction_form():
 
     form = TransactionForm()
@@ -77,19 +77,9 @@ def transaction_form():
     form.category.choices = [(cat.id, cat.name) for cat in cats]
     return render_template("newtransaction.html", form = form)
 
-# MONETARY FORMATTING: string
-def format_number_string(numberString): # TODO move to another module
-    split = numberString.split(".")
-
-    if len(split) == 1 :
-        return (numberString + ".00")
-    if len(split[1]) < 2:
-        numberString = "" + numberString + "0"
-    return numberString
-
 
 @app.route("/transactions", methods=["POST"])
-@login_required
+@login_required(roles=["USER","ADMIN"])
 def create_transaction():
     t = Transaction()
     t.transaction_type = "TRANSFER" # Preset pending value determination
@@ -136,4 +126,14 @@ def add_transaction_amount_to_account(t):
     if t.credit_or_debit == "CREDIT":
         account.current_balance = account.current_balance + t.amount
 
-    db.session().commit()      
+    db.session().commit()    
+
+# MONETARY FORMATTING: string
+def format_number_string(numberString): # TODO move to another module
+    split = numberString.split(".")
+
+    if len(split) == 1 :
+        return (numberString + ".00")
+    if len(split[1]) < 2:
+        numberString = "" + numberString + "0"
+    return numberString  

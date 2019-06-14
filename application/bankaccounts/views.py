@@ -1,17 +1,18 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_required, current_user
+from flask_login import current_user##, login_required
 from pprint import pprint
 from decimal import Decimal
 from datetime import datetime
 
-from application import app, db
+from application import app, db, login_required
 from application.bankaccounts.models import BankAccount
 from application.bankaccounts.forms import AccountForm
 from application.categories.forms import CategoryUpdateForm
 from application.transactions.models import Transaction
 
+# Get the info and transactions of a single bank account
 @app.route("/bankaccounts/<bankaccount_id>")
-@login_required
+@login_required(roles=["USER", "ADMIN"])
 def get_bankaccount(bankaccount_id):
     transactions = BankAccount.get_transactions_and_categories(bankaccount_id)
     bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
@@ -21,15 +22,15 @@ def get_bankaccount(bankaccount_id):
         categoryForm.category.choices = [("", "---")]+[(cat.id, cat.name) for cat in cats]
         return render_template("/bankaccounts/singlebankaccount.html", account = bankaccount, transactions = transactions, form = categoryForm)
 
+# Get a categorized summary of the specified account within a given time frame
 @app.route("/bankaccounts/<bankaccount_id>/summary")
-@login_required
+@login_required(roles=["USER", "ADMIN"])
 def get_bankaccount_summary(bankaccount_id):
 
     period = request.args.get("period")
     active = period
     print(period)
 
-    #today = datetime.today()
     now = datetime.now()
 
     if period == "mtd":
@@ -67,8 +68,9 @@ def get_bankaccount_summary(bankaccount_id):
     return render_template("/bankaccounts/accountsummary.html", account=bankaccount, summary=summarydata, active=active)
 
 
+# Delete / Remove bankaccount
 @app.route("/bankaccounts/<bankaccount_id>/deletion", methods = ["POST"])
-@login_required
+@login_required(roles=["USER", "ADMIN"])
 def delete_bankaccount(bankaccount_id):
     u = current_user
     acc = BankAccount.query.filter_by(id=bankaccount_id).first()
@@ -76,7 +78,7 @@ def delete_bankaccount(bankaccount_id):
     if u.id == acc.user_id:
         db.session.delete(acc)
         db.session.commit()
-
+        # TODO Delete all transactions on this account account 
         return redirect(url_for("bankaccounts"))
 
     return "not found"
@@ -94,7 +96,7 @@ def update_bankaccount(bankaccount_id):
     return "ERROR"
 
 @app.route("/bankaccounts", methods = ["GET", "POST"])
-@login_required
+@login_required(roles=["USER", "ADMIN"])
 def bankaccounts():
     if request.method == "GET":
         accs = BankAccount.query.filter_by(user_id=current_user.id)
