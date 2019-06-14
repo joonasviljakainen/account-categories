@@ -33,6 +33,24 @@ Or you can check out the admin features, currently very basic:
 
 See [User stories](/documentation/stories.md).
 
+### Installation & Use
+
+You need to have Python 3 and Pip installed.
+
+clone the repository and navigate to the root directory of the app.
+`git clone https://github.com/joonasviljakainen/account-categories.git`
+
+Install dependencies:
+`pip install -r /path/to/requirements.txt`
+
+Activate virtual environment:
+`source venv/bin/activate`
+
+Run the application:
+`python3 run.py`
+
+Now navigate to `localhost:5000`.
+
 ### Database architecture
 
 See [Database Architecture](/documentation/databaseArchitecture.md)
