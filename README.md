@@ -22,6 +22,13 @@ Create a new user profile if you would like to start from stratch, or use the fo
 | Username | jones |
 | Password | jones |
 
+Or you can check out the admin features, currently very basic:
+
+| Attribute | Value |
+|:-|:-|
+| Username | admin |
+| Password | admin |
+
 ### User stories
 
 See [User stories](/documentation/stories.md).

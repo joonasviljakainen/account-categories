@@ -1,12 +1,24 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<div>List of users (DEMO)</div>
+
+<h1>Administrator view</h1>
+<p>This is the administrator view. This page will develop as the application does.</p>
+<h3>Number of transactions in the database:</h3>
+<p>{{ numberOfTransactions }}</p>
+
+<h3>List of users (DEMO)</h3>
 
 <table>
+    <th>
+        <tr>
+            <td>Username</td>
+            <td>ID</td>
+        </tr>
+    </th>
     {% for user in users %}
     <tr>
-        <td>{{ user.name }}</td>
+        <td>{{ user.username }}</td>
         <td>{{ user.id}} </td>
     </tr>
     {% endfor %}

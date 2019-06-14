@@ -5,6 +5,10 @@ from application import app, db, bcrypt, login_required
 from application.auth.models import User
 from application.auth.forms import LoginForm, CreateUserForm
 from application.categories.models import Category
+from application.transactions.models import Transaction
+
+from sqlalchemy import func
+
 
 # LOGIN FORM AND LOGIN
 @app.route("/auth/login", methods = ["GET", "POST"])
@@ -66,4 +70,5 @@ def create_user():
 @login_required(roles=["ADMIN"])
 def get_admin_stats():
     users = User.query.all()
-    return render_template("/auth/adminstats.html", users=users)
+    transactionNumber = db.session().query(func.count(Transaction.id)).scalar()
+    return render_template("/auth/adminstats.html", users=users, numberOfTransactions=transactionNumber)
