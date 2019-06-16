@@ -30,12 +30,12 @@
 
 <h2>Account transactions</h2>
 
-<p>TODO: X out of X</p>
+<p>{{ pagingMessage }}</p>
 {% if previousPage >= 0 %}
-<a href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=previousPage) }}">Previous page</a>
+<a href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=previousPage) }}"> <-- Previous page</a>
 {% endif %}
 {% if notLast%}
-<a href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=nextPage) }}">Next page</a>
+<a style="float: right" href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=nextPage) }}">Next page --> </a>
 {% endif %}
 
 <table>
