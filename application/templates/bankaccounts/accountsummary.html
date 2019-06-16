@@ -2,11 +2,11 @@
 
 {% block body %}
 
-<h1>{{ account.name }}</h1>
-<a href="{{ url_for('get_bankaccount', bankaccount_id=account.id) }}">Back to account</a>
-<a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id, period=['ytd']) }}">Year to date</a>
-<a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id, period=['mtd']) }}">Month to date</a>
-<a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id, period=['all']) }}">All time</a>
+    <h1>{{ account.name }}</h1>
+    <a href="{{ url_for('get_bankaccount', bankaccount_id=account.id) }}">Back to account</a>
+    <a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id, period=['ytd']) }}">Year to date</a>
+    <a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id, period=['mtd']) }}">Month to date</a>
+    <a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id, period=['all']) }}">All time</a>
 <h2>{{ active }}</h2>
 <table>
     <th>

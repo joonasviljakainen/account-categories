@@ -2,23 +2,21 @@
 
 {% block body %}
 {{ error }}
-
-<form method="POST" action="{{ url_for('auth_login')}}" >
-    <table>
-        <tr class="form-group">
-            <td>{{ form.username.label(class_="form-control") }}</td>
-            <td>{{ form.username(class_="form-control") }}</td>
-        </tr>
-        <tr class="form-group">
-            <td>{{ form.password.label(class_="form-control") }}</td>
-            <td>{{ form.password(class_="form-control") }}</td>
-        </tr>
-        <tr class="form-group">
-            <td colspan="2">
-                <input class="form-control" type="submit" value="Log in" />
-            </td>
-        </tr>
-    </table>
-
-</form>
+   <form method="POST" action="{{ url_for('auth_login')}}" style="width: 100%">
+       <table>
+           <tr class="form-group">
+               <td>{{ form.username.label(class_="form-control") }}</td>
+               <td>{{ form.username(class_="form-control") }}</td>
+           </tr>
+           <tr class="form-group">
+               <td>{{ form.password.label(class_="form-control") }}</td>
+               <td>{{ form.password(class_="form-control") }}</td>
+           </tr>
+           <tr class="form-group">
+               <td colspan="">
+                   <input class="form-control" type="submit" value="Log in" />
+               </td>
+           </tr>
+       </table>
+   </form>
 {% endblock %}

@@ -37,6 +37,14 @@ class Transaction(Base):
         return response
 
     @staticmethod
+    def delete_transactions_by_account(bankaccount_id):
+        stmt = text("DELETE FROM transact"
+                    " WHERE transact.bankaccount_id = :bankaccount_id").params(bankaccount_id=bankaccount_id)
+        res = db.engine.execute(stmt)
+        print(res)
+        return res
+
+    @staticmethod
     def get_sum_of_debit_transactions_by_category_withboundingdate(bankaccount_id):
         stmt = text("SELECT sum(transact.amount) AS amount, category.name, category.id FROM transact"
                     " LEFT JOIN category ON transact.category_id = category.id"

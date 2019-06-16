@@ -11,9 +11,12 @@
     <tr>
         <td>{{ category.name }}</td>
         <td>
+            {% if category.name != "No Category" %}
             <form method="POST" action="{{ url_for('delete_category', category_id=category.id) }}">
                 <button type="submit">Remove category</button>
             </form>
+
+            {% endif %}
         </td>
     </tr>
     {% endfor %}

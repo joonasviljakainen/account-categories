@@ -4,6 +4,7 @@ from flask_login import current_user
 from application import app, db, login_required
 from application.categories.models import Category
 from application.categories.forms import CategoryForm
+from application.transactions.models import Transaction
 
 @app.route("/categories", methods = ["GET", "POST"])
 @login_required(roles=["USER","ADMIN"])
@@ -39,8 +40,19 @@ def delete_category(category_id):
     u = current_user
     cat = Category.query.filter_by(id=category_id).first()
 
+    if cat.name == "No Category":
+        return redirect(url_for("categories", error="Category \"No Category\" cannot be deleted!"))
+
     if u.id == cat.user_id:
         #TODO: remove this category from all transactions
+
+        transactions = Transaction.query.filter_by(category_id = cat.id)
+        noCat = Category.query.filter_by(user_id=u.id, name = "No Category").first()
+
+        for t in transactions:
+            t.category_id = noCat.id
+            db.session.add(t)
+            db.session.commit()
 
         db.session.delete(cat)
         db.session.commit()
