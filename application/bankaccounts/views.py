@@ -38,6 +38,11 @@ def get_bankaccount(bankaccount_id):
 
         endOfPage = min(numOfTs, pageSize * (pageNumber + 1))
 
+        pagingMessage = ("Showing transactions " + str(pageNumber * pageSize + 1) + " to " + str(endOfPage) + " of " + str(numOfTs))
+        if (numOfTs == 0):
+            pagingMessage = "No transactions"
+
+
         return render_template("/bankaccounts/singlebankaccount.html", 
             account = bankaccount, 
             transactions = transactions, 
@@ -46,7 +51,7 @@ def get_bankaccount(bankaccount_id):
             nextPage=nextPage, 
             previousPage=previousPage,
             notLast=notLast,
-            pagingMessage = ("Showing transactions " + str(pageNumber * pageSize + 1) + " to " + str(endOfPage) + " of " + str(numOfTs)))
+            pagingMessage = pagingMessage)
 
 # Get a categorized summary of the specified account within a given time frame
 @app.route("/bankaccounts/<bankaccount_id>/summary")
