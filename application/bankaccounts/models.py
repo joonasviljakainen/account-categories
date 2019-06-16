@@ -17,15 +17,29 @@ class BankAccount(db.Model):
     current_balance = db.Column(db.Numeric, default=0.00)
 
     @staticmethod
-    def get_transactions_and_categories(bankaccount_id):
-        stmt = text("SELECT * FROM transact"
-                    " LEFT JOIN Category ON transact.category_id = Category.id"
+    def get_number_of_transactions_on_account(bankaccount_id):
+        stmt = text("SELECT COUNT(*) FROM transact"
                     " WHERE transact.bankaccount_id = :bankaccount_id").params(bankaccount_id=bankaccount_id)
 
         res = db.engine.execute(stmt)
         response = []
         for r in res:
-            print(r)
+            response.append({
+                "count" : r[0]
+            })
+        return response[0].get("count")
+
+    @staticmethod
+    def get_transactions_and_categories(bankaccount_id, sortOrder, pageNumber, pageSize):
+        stmt = text("SELECT * FROM transact"
+                    " LEFT JOIN Category ON transact.category_id = Category.id"
+                    " WHERE transact.bankaccount_id = :bankaccount_id"
+                    " ORDER BY transact.booking_date DESC"
+                    " LIMIT :pageSize OFFSET :pageNumber").params(bankaccount_id=bankaccount_id, sortOrder=sortOrder, pageSize=pageSize, pageNumber=int(pageNumber) * int(pageSize))
+
+        res = db.engine.execute(stmt)
+        response = []
+        for r in res:
             response.append({
             "id" : r[0],
             "created_at" : r[1],

@@ -14,13 +14,42 @@ from application.transactions.models import Transaction
 @app.route("/bankaccounts/<bankaccount_id>")
 @login_required(roles=["USER", "ADMIN"])
 def get_bankaccount(bankaccount_id):
-    transactions = BankAccount.get_transactions_and_categories(bankaccount_id)
+
+    sortOrder = "ASC" if (request.args.get("asc")) else "DESC"
+    pageNumber = int(request.args.get("page") if request.args.get("page") else "0")
+    pageSize = 3
+
     bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
     if current_user.id == bankaccount.user_id:
+        transactions = BankAccount.get_transactions_and_categories(bankaccount_id, sortOrder, pageNumber, pageSize)
+        numOfTs = BankAccount.get_number_of_transactions_on_account(bankaccount_id)
+
+        eol = pageSize * (pageNumber + 1)
+
+        notLast = True
+        if eol >= numOfTs:
+            notLast = False
+            
+
+        print("NUM OF TS::::::")
+        print(numOfTs)
+
         cats = current_user.categories
         categoryForm = CategoryUpdateForm(request.values, account=bankaccount_id)
         categoryForm.category.choices = [("", "---")]+[(cat.id, cat.name) for cat in cats]
-        return render_template("/bankaccounts/singlebankaccount.html", account = bankaccount, transactions = transactions, form = categoryForm)
+        
+        nextPage = int(pageNumber) + 1
+        previousPage = int(pageNumber) - 1
+
+
+        return render_template("/bankaccounts/singlebankaccount.html", 
+            account = bankaccount, 
+            transactions = transactions, 
+            form = categoryForm, 
+            currentPage = str(pageNumber), 
+            nextPage=nextPage, 
+            previousPage=previousPage,
+            notLast=notLast)
 
 # Get a categorized summary of the specified account within a given time frame
 @app.route("/bankaccounts/<bankaccount_id>/summary")
@@ -68,7 +97,7 @@ def get_bankaccount_summary(bankaccount_id):
     return render_template("/bankaccounts/accountsummary.html", account=bankaccount, summary=summarydata, active=active)
 
 
-# Delete / Remove bankaccount
+# Delete / Remove bankaccount and related transactions
 @app.route("/bankaccounts/<bankaccount_id>/deletion", methods = ["POST"])
 @login_required(roles=["USER", "ADMIN"])
 def delete_bankaccount(bankaccount_id):
