@@ -3,8 +3,8 @@ from application import app
 import os
 
 if __name__ == "__main__":
-    #app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-    if (os.environ.get("HEROKU") == 1):
+    heroku = os.environ.get("HEROKU")
+    if (heroku == 1 or heroku == "1"):
         print("RUNNING IN PRODUCTION MODE")
         app.run(host="0.0.0.0")    
     else:
