@@ -93,11 +93,11 @@ def create_transaction():
             break
     
     if isOwn == False:
-        # Account not owned by userprint("Wrong move, buster")
+        # Account not owned by userprint
         # TODO inform user of this
         return redirect("/")
 
-    #AUTHOROZED
+    #AUTHORiZED
 
     t.bankaccount_id = requestedAccount
 
@@ -114,19 +114,25 @@ def create_transaction():
     db.session().commit()
 
     # ADDING TRANSACTION SUM TO ACCOUNT BALANCE
+    # TODO 
     add_transaction_amount_to_account(t)
 
     # Redirect to view with new transaction
     return redirect(url_for("get_transaction", transaction_id=t.id))
 
+# adds transaction amount to account balance if transaction datetime is at
+# or after the creation date of the account
 def add_transaction_amount_to_account(t):
     account = BankAccount.query.get(t.bankaccount_id)
-    if t.credit_or_debit == "DEBIT":
-        account.current_balance = account.current_balance - t.amount
-    if t.credit_or_debit == "CREDIT":
-        account.current_balance = account.current_balance + t.amount
-
-    db.session().commit()    
+    
+    if account.date_created.date() <= t.booking_date:
+        if t.credit_or_debit == "DEBIT":
+            account.current_balance = account.current_balance - t.amount
+        if t.credit_or_debit == "CREDIT":
+            account.current_balance = account.current_balance + t.amount
+        db.session().commit()    
+    else:
+        return
 
 # MONETARY FORMATTING: string
 def format_number_string(numberString): # TODO move to another module

@@ -40,7 +40,6 @@ def login_required(roles=["ANY"]):
     def wrapper(fn):
         @wraps(fn)
         def decorated_view(*args, **kwargs):
-            print("MÖSS")
             if not current_user:
                 return login_manager.unauthorized()
           
@@ -56,7 +55,6 @@ def login_required(roles=["ANY"]):
                 for role in roles:
                     print(role)
                     if current_user.get_role() == role:
-                        print("AUTHORIZED")
                         unauthorized = False
                         break
 

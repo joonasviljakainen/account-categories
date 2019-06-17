@@ -1,10 +1,10 @@
 from application import db
+from application.models import Base
 from sqlalchemy.sql import text
 
-class BankAccount(db.Model):
+class BankAccount(Base):
     __tablename__ = "bankaccount"
 
-    id = db.Column(db.Integer, primary_key=True)
     bank = db.Column(db.String(40), nullable=False)
     name = db.Column(db.String(144), default="Checking account")
 
