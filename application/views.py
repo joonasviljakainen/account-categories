@@ -5,6 +5,7 @@ from application.transactions.models import Transaction
 from application.transactions.forms import TransactionForm
 from application.categories.forms import CategoryUpdateForm
 from application.categories.models import Category
+from application.accountcategories.models import AccountCategory
 from decimal import Decimal
 import datetime
 
@@ -46,7 +47,6 @@ def modify_transaction(transaction_id):
 def set_transaction_category(transaction_id):
     f = CategoryUpdateForm(request.form)
     if f.account.data == 0:
-        print("It is 0")
         # TODO: alternate route for returning to the view of a single transaction
         # Return redirect to the transaction
         return "Not implemented yet"
@@ -60,6 +60,11 @@ def set_transaction_category(transaction_id):
         if t and t.bankaccount_id in (map(lambda x: x.id, current_user.bankaccounts)) and cat:
             t.category_id = f.category.data
             db.session().commit()
+
+            ac = AccountCategory.query.filter_by(bankaccount_id = t.bankaccount_id, category_id = t.category_id)
+            db.session().add(ac)
+            db.session().commit()
+
             return redirect( url_for("get_bankaccount", bankaccount_id=f.account.data) )
         else:
             return "Unauthorized"
@@ -113,8 +118,12 @@ def create_transaction():
     db.session().add(t)
     db.session().commit()
 
-    # ADDING TRANSACTION SUM TO ACCOUNT BALANCE
-    # TODO 
+    ac = AccountCategory()
+    ac.bankaccount_id = requestedAccount
+    ac.category_id = t.category_id
+    db.session().add(ac)
+    db.session().commit()
+
     add_transaction_amount_to_account(t)
 
     # Redirect to view with new transaction

@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, json
 from flask_login import current_user##, login_required
 from pprint import pprint
 from decimal import Decimal
@@ -60,43 +60,54 @@ def get_bankaccount_summary(bankaccount_id):
 
     period = request.args.get("period")
     active = period
-    print(period)
-
     now = datetime.now()
 
     if period == "mtd":
         start_date = datetime(now.year, now.month, 1)
         end_date = now
-        print("Month to date")
     elif period == "year":
         start_date = datetime(now.year - 1, now.month, now.day)
         end_date = now
-        print("365 days")
     elif period == "ytd":
         start_date = datetime(now.year, 1, 1)
         end_date = now
-        print("year to date")
     elif period == "all":
         start_date = datetime(1970, 1, 1)
         end_date = now
-        print("all time")
     elif period == "test":
         start_date = datetime(now.year, now.month, 5)
         end_date = now
-        print("all time")
     else:
         start_date = datetime(now.year, now.month, 1)
         end_date = now
         active="mtd"
-        print("month to date")
 
     bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
     if bankaccount.user_id != current_user.id:
         return "Unauthorized"
 
-    summarydata = Transaction.get_sum_of_debit_transactions_by_category(bankaccount_id, start_date, end_date)
-    print(summarydata)
-    return render_template("/bankaccounts/accountsummary.html", account=bankaccount, summary=summarydata, active=active)
+    debitSummaryData = Transaction.get_sum_of_transactions_by_category("DEBIT", bankaccount_id, start_date, end_date)
+    debitD = []
+    colorList = [ "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#DDDDDD", "#ABCABC" ]
+    i = 0
+    while i < len(debitSummaryData):
+        debitD.append({ 'label': debitSummaryData[i].get("name"), 'value': str(debitSummaryData[i].get("amount")), 'color': colorList[i]})
+        i = i + 1
+
+    creditSummaryData = Transaction.get_sum_of_transactions_by_category("CREDIT", bankaccount_id, start_date, end_date)
+    creditD = []
+    i = 0
+    while i < len(creditSummaryData):
+        creditD.append({ 'label': creditSummaryData[i].get("name"), 'value': str(creditSummaryData[i].get("amount")), 'color': colorList[i]})
+        i = i + 1
+
+    return render_template("/bankaccounts/accountsummary.html", 
+        account=bankaccount,
+        debitSummary=debitSummaryData,
+        debitset=debitD,
+        creditset=creditD,
+        creditSummary=creditSummaryData,
+        active=active)
 
 
 # Delete / Remove bankaccount and related transactions
@@ -108,8 +119,8 @@ def delete_bankaccount(bankaccount_id):
 
     if u.id == acc.user_id:
         Transaction.delete_transactions_by_account(acc.id)
-        db.session.delete(acc)
-        db.session.commit()
+        db.session().delete(acc)
+        db.session().commit()
         return redirect(url_for("bankaccounts"))
 
     return "not found"

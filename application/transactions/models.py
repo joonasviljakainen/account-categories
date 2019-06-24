@@ -19,13 +19,13 @@ class Transaction(Base):
     credit_or_debit = db.Column(db.String(6), nullable=False)
 
     @staticmethod
-    def get_sum_of_debit_transactions_by_category(bankaccount_id, start_date, end_date):
+    def get_sum_of_transactions_by_category(credit_or_debit, bankaccount_id, start_date, end_date):
         stmt = text("SELECT sum(transact.amount) AS amount, category.name, category.id FROM transact"
                     " LEFT JOIN category ON transact.category_id = category.id"
-                    " WHERE ((transact.credit_or_debit = 'DEBIT' AND transact.bankaccount_id = :bankaccount_id)"
+                    " WHERE ((transact.credit_or_debit = :credit_or_debit AND transact.bankaccount_id = :bankaccount_id)"
                     " AND  (transact.booking_date BETWEEN :start_date AND :end_date))"
                     " GROUP BY category.id, category.name"
-                    " ORDER BY category.name").params(bankaccount_id=bankaccount_id, start_date=start_date, end_date=end_date)
+                    " ORDER BY category.name").params(credit_or_debit=credit_or_debit, bankaccount_id=bankaccount_id, start_date=start_date, end_date=end_date)
         res = db.engine.execute(stmt)
         response = []
         for r in res:
@@ -41,7 +41,6 @@ class Transaction(Base):
         stmt = text("DELETE FROM transact"
                     " WHERE transact.bankaccount_id = :bankaccount_id").params(bankaccount_id=bankaccount_id)
         res = db.engine.execute(stmt)
-        print(res)
         return res
 
     @staticmethod
