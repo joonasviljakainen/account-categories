@@ -62,7 +62,7 @@ Clone the project with `git clone https://github.com/joonasviljakainen/account-c
 3. Open up the settings of you app on heroku and ensure that the key `HEROKU` is set to `1`.
 4. Add PSQL with `heroku addons:create heroku-postgresql:hobby-dev`
 5. Create a Procfile (if not already present) and punch in  `web: gunicorn --preload --workers 1 application:app`
-6. In your local directory, `pip freeze > requrements.txt`. Remove 
+6. In your local directory, `pip freeze > requrements.txt`. Remove the line `pkg-resources==0.0.0`.
 7. With the CLI, puch in `git push heroku master`. The application should start up after a while.
 
 
