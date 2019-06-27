@@ -13,7 +13,6 @@ class Transaction(Base):
     counterparty_name = db.Column(db.String(144), nullable=False)
     amount = db.Column(db.Numeric(), nullable=False)
 
-    # Type: card, transfer, salary...
     transaction_type = db.Column(db.String(30), nullable=False)
     message = db.Column(db.String(250), nullable=True)
     credit_or_debit = db.Column(db.String(6), nullable=False)

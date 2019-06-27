@@ -64,18 +64,12 @@ def get_bankaccount_summary(bankaccount_id):
     if period == "mtd":
         start_date = datetime(now.year, now.month, 1)
         end_date = now
-    #elif period == "year":
-    #    start_date = datetime(now.year - 1, now.month, now.day)
-    #    end_date = now
     elif period == "ytd":
         start_date = datetime(now.year, 1, 1)
         end_date = now
     elif period == "all":
         start_date = datetime(1970, 1, 1)
         end_date = now
-    #elif period == "test":
-    #    start_date = datetime(now.year, now.month, 5)
-    #    end_date = now
     else:
         start_date = datetime(now.year, now.month, 1)
         end_date = now
@@ -87,7 +81,7 @@ def get_bankaccount_summary(bankaccount_id):
 
     debitSummaryData = Transaction.get_sum_of_transactions_by_category("DEBIT", bankaccount_id, start_date, end_date)
     debitD = []
-    colorList = [ "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#DDDDDD", "#ABCABC" ]
+    colorList = [ "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA","#ABCDEF", "#DDDDDD", "#ABCABC", "#FFAAFF", "GG00GG", "#AF99FA"]
     i = 0
     while i < len(debitSummaryData):
         debitD.append({ 'label': debitSummaryData[i].get("name"), 'value': str(debitSummaryData[i].get("amount")), 'color': colorList[i]})
@@ -144,7 +138,6 @@ def bankaccounts():
         return render_template("/bankaccounts/bankaccounts.html", accounts = accs , form = AccountForm())
 
     form = AccountForm(request.form)
-    ## TODO validations
     
     a = BankAccount()
     a.user_id = current_user.id

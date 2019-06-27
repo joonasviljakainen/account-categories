@@ -10,4 +10,3 @@ if __name__ == "__main__":
     else:
         print("RUNNING IN DEBUG MODE")
         app.run(debug=True)
-    #app.run(host="0.0.0.0")

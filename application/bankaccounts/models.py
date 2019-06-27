@@ -11,8 +11,6 @@ class BankAccount(Base):
     user_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
 
     transactions = db.relationship("Transaction", backref="transactions", lazy = True)
-
-    # EURO CENTS pls
     initial_balance = db.Column(db.Numeric, default=0.00)
     current_balance = db.Column(db.Numeric, default=0.00)
 

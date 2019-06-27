@@ -17,8 +17,6 @@ def auth_login():
         return render_template("/auth/loginform.html", form = LoginForm())
 
     form = LoginForm(request.form)
-    ## TODO validation
-
     user = User.query.filter_by(username=form.username.data).first()
 
     if not user or not bcrypt.check_password_hash(user.password, form.password.data):
@@ -58,7 +56,6 @@ def create_user():
         db.session().add(u)
         db.session().commit()
 
-        # Adding default categories
         Category.create_default_categories(u.id)
 
         return redirect(url_for("auth_login"))

@@ -44,8 +44,6 @@ def delete_category(category_id):
         return redirect(url_for("categories", error="Category \"No Category\" cannot be deleted!"))
 
     if u.id == cat.user_id:
-        #TODO: remove this category from all transactions
-
         transactions = Transaction.query.filter_by(category_id = cat.id)
         noCat = Category.query.filter_by(user_id=u.id, name = "No Category").first()
 
@@ -66,7 +64,6 @@ def category(category_id):
     
     c = Category.query.get(category_id)
     if c.user_id == current_user.id:
-        # Category information: The name of the category, transactions in that category, accounts in that category
         category_data = Category.get_transactions_by_account_for_category(category_id)
         return render_template("/categories/categorysummary.html", transactions = category_data, category = c)
     else:
