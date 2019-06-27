@@ -1,36 +1,40 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1>Transactions</h1>
-<table class="table">
-    <thead class="thead-light">
-        <tr>
-            <th>Transaction ID</th>
-            <th>Amount (EUR)</th>
-            <th>Counterparty Name</th>
-            <th>Credit or debit</th>
-            <th>Message</th>
-            <th>Category</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for transaction in transactions %}
-        <tr>
-            <td>
-                <a href="{{ url_for('get_transaction', transaction_id=transaction.id) }}">
-                    {{ transaction.booking_date }}
-
-                </a>
-            </td>
-            <td>{{ transaction.amount }}</td>
-            <td>{{ transaction.counterparty_name }}</td>
-            <td>{{ transaction.credit_or_debit }}</td>
-            <td>{{ transaction.message }}</td>
-            <td>{{ transaction.category_id }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="row justify-content-center" style="margin-top: 20px">
+    <div class="col-sm-10">
+        <h1>Transactions</h1>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Amount (EUR)</th>
+                    <th>Counterparty Name</th>
+                    <th>Credit or debit</th>
+                    <th>Message</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('get_transaction', transaction_id=transaction.id) }}">
+                            {{ transaction.booking_date }}
+                        
+                        </a>
+                    </td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.counterparty_name }}</td>
+                    <td>{{ transaction.credit_or_debit }}</td>
+                    <td>{{ transaction.message }}</td>
+                    <td>{{ transaction.category_id }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
 {% endblock %}

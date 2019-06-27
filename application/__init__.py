@@ -89,9 +89,6 @@ from application.bankaccounts import views
 from application.categories import models
 from application.categories import views
 
-# Accountcategories
-from application.accountcategories import models
-
 # Creating all database tables
 try:
     db.create_all()

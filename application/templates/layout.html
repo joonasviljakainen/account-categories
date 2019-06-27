@@ -34,16 +34,12 @@
       <a href="{{ url_for('get_admin_stats') }}">Go to Admin View</a>
       {% endif %}
       <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            {% block body %}
-          
-            <p>
-  	       Content
-            </p>
-            {% endblock %}
-          </div>
-        </div>
+        {% block body %}
+      
+        <p>
+  	   Content
+        </p>
+        {% endblock %}
       </div>
     </div>
   </body>

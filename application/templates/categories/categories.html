@@ -1,48 +1,55 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<div class="row justify-content-center" style="margin-top: 20px">
+        <div class="col-sm-10">
 
-<h1>Categories</h1>
-<p style="color: red">{{error}}</p>
-<table class="table table-sm">
-    <thead class="thead-light">
-        <tr>
-            <th>Category name</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-
-
-    {% for category in categories %}
-    <tr>
-        <td><a href="{{ url_for('category', category_id = category.id) }}">{{ category.name }}</a></td>
-        <td>
-            {% if category.name != "No Category" %}
-            <form method="POST" action="{{ url_for('delete_category', category_id=category.id) }}">
-                <button type="submit">Remove category</button>
-            </form>
-
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-
-    <h3>Add a category</h3>
-    <form method="POST" action="{{ url_for('categories', error='') }}" >
-        <tr class="form-group">
-            <td>{{ form.name.label(class_="form-control") }}</td>
-            <td>{{ form.name(class_="form-control") }}</td>
-            <td><button class="form-control" type="submit">Add category</button></td>
-            <td>
-                <ul>
-                    {% for error in form.name.errors %}
-                    <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            </td>
-        </tr>
-    </form>
-
-
+        <h1>Categories</h1>
+        <p style="color: red">{{error}}</p>
+        <table class="table table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>Category name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+        
+            <h4 color="red">{{ error }}</h4>
+            {% for category in categories %}
+            <tr>
+                <td><a href="{{ url_for('category', category_id = category.id) }}">{{ category.name }}</a></td>
+                <td>
+                    {% if category.name != "No Category" %}
+                    <form method="POST" action="{{ url_for('delete_category', category_id=category.id) }}">
+                        <button type="submit" class="btn btn-submit">Delete category</button>
+                    </form>
+                    {% else %}
+                    <button type="submit" class="btn btn-disabled" disabled>Cannot delete</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<div class="row justify-content-center" style="margin-top: 20px">
+    <div class="col-sm-10">
+        <h3>Add a category</h3>
+        <form method="POST" action="{{ url_for('categories') }}" >
+            <table>
+                <tr class="form-group">
+                    <td>{{ form.name.label(class_="label col-md-2") }}</td>
+                    <td>{{ form.name(class_="form-control") }}</td>
+                    <td>
+                        <button class="form-control" type="submit">Add category</button>
+                        <ul>{% for error in form.name.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>        
 {% endblock %}

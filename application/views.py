@@ -5,7 +5,6 @@ from application.transactions.models import Transaction
 from application.transactions.forms import TransactionForm
 from application.categories.forms import CategoryUpdateForm
 from application.categories.models import Category
-from application.accountcategories.models import AccountCategory
 from decimal import Decimal
 import datetime
 
@@ -116,12 +115,6 @@ def create_transaction():
     t.booking_date = booking_date
 
     db.session().add(t)
-    db.session().commit()
-
-    ac = AccountCategory()
-    ac.bankaccount_id = requestedAccount
-    ac.category_id = t.category_id
-    db.session().add(ac)
     db.session().commit()
 
     add_transaction_amount_to_account(t)

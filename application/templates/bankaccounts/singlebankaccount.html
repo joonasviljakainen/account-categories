@@ -1,87 +1,95 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h1>{{ account.name }}</h1>
-<h4><a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id)}}">See category summary for this account</a></h4>
-<table class="table">
-    <tr>
-        <th scope="row">Name</td>
-        <td>{{ account.name }}</td>
-        <td>
-            <form method="POST" action="{{ url_for('update_bankaccount', bankaccount_id = account.id) }}">
-                <input type="text" name="accountname" />
-                <button type="submit">Update name</button>
-            </form>
-    </td>
-    </tr>
-    <tr>
-        <th scope="row">Bank</td>
-        <td>{{ account.bank }}</td>
-    </tr>
-    <tr>
-        <th scope="row">Current Balance</td>
-        <td>{{ account.current_balance }}</td>
-    </tr>
-    <tr>
-        <th scope="row">Initial Balance</td>
-        <td>{{ account.initial_balance }}</td>
-    </tr>
-</table>
+<div class="row justify-content-center" style="margin-top: 20px">
+    <div class="col-sm-10">
+        <h1>{{ account.name }}</h1>
+        <table class="table">
+            <tr>
+                <th scope="row">Name</td>
+                <td>{{ account.name }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('update_bankaccount', bankaccount_id = account.id) }}">
+                        <input type="text" name="accountname" />
+                        <button type="submit">Update name</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Bank</td>
+                <td>{{ account.bank }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Current Balance</td>
+                <td>{{ account.current_balance }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Initial Balance</td>
+                <td>{{ account.initial_balance }}</td>
+            </tr>
+        </table>
+        <h4><a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id)}}">See category summary for this account</a></h4>
+    </div>
+</div>
 
-<h2>Account transactions</h2>
+<div class="row justify-content-center" style="margin-top: 20px">
+    <div class="col-sm-10">
+        <h2>Account transactions</h2>
 
-<p>{{ pagingMessage }}</p>
-{% if previousPage >= 0 %}
-<a href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=previousPage) }}"> <-- Previous page</a>
-{% endif %}
-{% if notLast%}
-<a style="float: right" href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=nextPage) }}">Next page --> </a>
-{% endif %}
-
-<table class="table">
-    <thead class="thead-light">
-    <tr>
-        <th>Date</th>
-        <th>Counterparty</th>
-        <th>Type</th>
-        <th>Amount</th>
-        <th>Message/Refnum</th>
-        <th>Category</th>
-        <th>Change category</th>
-    </tr>
-</thead>
-<tbody>
-    {% for transaction in transactions %}
-    <tr>
-        <td>
-            <a href="{{ url_for('get_transaction', transaction_id=transaction.id) }}">
-                {{ transaction.booking_date }}
-            </a>
-        </td>
-        <td>{{ transaction.counterparty_name }}</td>
-        <td>{{ transaction.credit_or_debit }}</td>
-
-        {% if transaction.credit_or_debit == "CREDIT" %}
-        <td style="color:green">{{ transaction.amount }}</td>
-        {% else %}
-        <td style="color:red">-{{ transaction.amount }}</td>
+        <p>{{ pagingMessage }}</p>
+        {% if previousPage >= 0 %}
+        <a href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=previousPage) }}"> <-- Previous page</a>
+        {% endif %}
+        {% if notLast%}
+        <a style="float: right" href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=nextPage) }}">Next page --> </a>
         {% endif %}
 
-        <td>{{ transaction.message }}</td>
-        <td><a href="{{ url_for('category', category_id=transaction.category_id) }}">{{ transaction.category_name }}</a></td>
-        <td>
-            <form method="POST" action="{{ url_for('set_transaction_category', transaction_id=transaction.id)  }}">
-                
-                <span style="display: inline">{{ form.category(class_="form-control") }}</span>
-                <span style="display: inline">{{ form.submit(class_="form-control") }}</span>
-                <span>{{ form.account(class_="form-control") }}</span>
-                
-        </form>
-        </td>
+        <table class="table">
+            <thead class="thead-light">
+            <tr>
+                <th>Date</th>
+                <th>Counterparty</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Message/Refnum</th>
+                <th>Category</th>
+                <th>Change category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('get_transaction', transaction_id=transaction.id) }}">
+                        {{ transaction.booking_date }}
+                    </a>
+                </td>
+                <td>{{ transaction.counterparty_name }}</td>
+                <td>{{ transaction.credit_or_debit }}</td>
+            
+                {% if transaction.credit_or_debit == "CREDIT" %}
+                <td style="color:green">{{ transaction.amount }}</td>
+                {% else %}
+                <td style="color:red">-{{ transaction.amount }}</td>
+                {% endif %}
+            
+                <td>{{ transaction.message }}</td>
+                <td><a href="{{ url_for('category', category_id=transaction.category_id) }}">{{ transaction.category_name }}</a></td>
+                <td>
+                    <form method="POST" action="{{ url_for('set_transaction_category', transaction_id=transaction.id)  }}">
 
-    </tr>
-    {% endfor %}
-</tbody>
-</table>
+                        <span style="display: inline">{{ form.category(class_="form-control") }}</span>
+                        <span style="display: inline">{{ form.submit(class_="form-control") }}</span>
+                        <span>{{ form.account(class_="form-control") }}</span>
 
-{% endblock %}
+                </form>
+                </td>
+            
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+</div>
+
+        {% endblock %}

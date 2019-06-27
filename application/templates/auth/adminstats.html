@@ -1,26 +1,29 @@
 {% extends "layout.html" %}
 
 {% block body %}
-
-<h1>Administrator view</h1>
-<p>This is the administrator view. This page will develop as the application does.</p>
-<h3>Number of transactions in the database:</h3>
-<p>{{ numberOfTransactions }}</p>
-
-<h3>List of users (DEMO)</h3>
-
-<table class="table">
-    <th>
-        <tr>
-            <td>Username</td>
-            <td>ID</td>
-        </tr>
-    </th>
-    {% for user in users %}
-    <tr>
-        <td>{{ user.username }}</td>
-        <td>{{ user.id}} </td>
-    </tr>
-    {% endfor %}
-</table>
-{% endblock %}
+<div class="row justify-content-center" style="margin-top: 20px">
+    <div class="col-sm-8">
+        <h1>Administrator view</h1>
+        <p>This is the administrator view. This is purely a technical demonstration for authorization.</p>
+        <h3>Number of transactions in the database:</h3>
+        <p>{{ numberOfTransactions }}</p>
+        
+        <h3>List of users (DEMO)</h3>
+        
+        <table class="table">
+            <th>
+                <tr>
+                    <td>Username</td>
+                    <td>ID</td>
+                </tr>
+            </th>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.id}} </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endblock %}
+    </div>    
+</div>

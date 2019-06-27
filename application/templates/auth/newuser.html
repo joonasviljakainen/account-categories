@@ -1,35 +1,38 @@
 {% extends "layout.html"%}
 
 {% block body %}
+<div class="row justify-content-center" >
+    <div class="col-sm-6">
+        <h1>Sign up</h1>
+        <p>Sign up to Pivo-Slayer to start using our magnificent service. We'll even provide a few basic categories for you, ready for use!</p>
 
-<h1>Sign up</h1>
-<p>Sign up to Pivo-Slayer to start using our magnificent service. We'll even provide a few basic categories for you, ready for use!</p>
+        <p style="color: red">{{ error }}</p>
 
-<p style="color: red">{{ error }}</p>
-
-<form method="POST" action="{{ url_for('create_user') }}">
-    <table>
-        <tr>
-            <td>{{ form.displayname.label(class_="form-control") }}</td>
-            <td>{{ form.displayname(class_="form-control") }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.username.label(class_="form-control") }}</td>
-            <td>{{ form.username(class_="form-control") }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.password.label(class_="form-control") }}</td>
-            <td>{{ form.password(class_="form-control") }}</td>
-        </tr>
-        <tr>
-            <td>{{ form.pwdvalidation.label(class_="form-control") }}</td>
-            <td>{{ form.pwdvalidation(class_="form-control") }}</td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input class="form-control" type="submit" value="Create user" />
-            </td>
-        </tr>
-    </table>
-</form>
-{% endblock %}
+        <form method="POST" action="{{ url_for('create_user') }}">
+            <table>
+                <tr>
+                    <td>{{ form.displayname.label(class_="form-control") }}</td>
+                    <td>{{ form.displayname(class_="form-control") }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.username.label(class_="form-control") }}</td>
+                    <td>{{ form.username(class_="form-control") }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.password.label(class_="form-control") }}</td>
+                    <td>{{ form.password(class_="form-control") }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form.pwdvalidation.label(class_="form-control") }}</td>
+                    <td>{{ form.pwdvalidation(class_="form-control") }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input class="form-control" type="submit" value="Create user" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        {% endblock %}
+    </div>    
+</div>
