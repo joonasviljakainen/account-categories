@@ -2,8 +2,6 @@
 
 {% block body %}
 
-
-
 <h1>Accounts</h1>
 <table class="table">
     <thead class="thead-light">
@@ -40,25 +38,21 @@
 <h2>Create new Bank account</h2>
 {{ error }}
 <form method="POST" action="{{ url_for('bankaccounts') }}">
-    <table>
-        <tr class="form-group">
-            <td>{{ form.name.label(class_="form-control") }}</td>
-            <td>{{ form.name(class_="form-control") }}</td>
-        </tr>
-        <tr class="form-group">
-            <td>{{ form.bank.label(class_="form-control") }}</td>
-            <td>{{ form.bank(class_="form-control") }}</td>
-        </tr>
-        <tr class="form-group">
-            <td>{{ form.balance.label(class_="form-control") }}</td>
-            <td>{{ form.balance(class_="form-control") }}</td>
-        </tr>
-        <tr class="form-group">
-            <td colspan="2">
-                <input class="form-control" type="submit" value="Create bank account" />
-            </td>
-        </tr>
-    </table>
+    <div class="form-group row">
+        <span class="col-sm-3 col-form-label">{{ form.name.label }}</span>
+        <span>{{ form.name(class_="form-control") }}</span>
+    </div>
+    <div class="form-group row">
+        <span class="col-sm-3 col-form-label">{{ form.bank.label }}</span>
+        <span>{{ form.bank(class_="form-control") }}</span>
+    </div>
+    <div class="form-group row">
+        <span class="col-sm-3 col-form-label">{{ form.balance.label }}</span>
+        <span>{{ form.balance(class_="form-control") }}</span>
+    </div>
+    <div class="form-group row">
+        <input class="col-sm-3 col-form-label" class="form-control" type="submit" value="Create bank account" />
+    </div>
 </form>
 
 {% endblock %}

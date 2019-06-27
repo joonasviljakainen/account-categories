@@ -8,7 +8,7 @@
     <table>
         <tr class="form-group">
             <td>
-                {{ form.amount.label(class_="form-control") }}
+                {{ form.amount.label(class_="col-form-label") }}
             </td>
             <td>
                 {{ form.amount(class_="form-control") }}
@@ -16,7 +16,7 @@
             <td>
         </tr>
         <tr class="form-group">
-            <td>{{ form.bookingdate.label(class_="form-control") }}</td>
+            <td>{{ form.bookingdate.label(class_="col-form-label") }}</td>
             <td>{{ form.bookingdate(class_="form-control") }}</td>
             <td>
                 <ul>
@@ -27,7 +27,7 @@
             </td>
         </tr>
         <tr class="form-group">
-            <td>{{ form.counterparty.label(class_="form-control") }}</td>
+            <td>{{ form.counterparty.label(class_="col-form-label") }}</td>
             <td>{{ form.counterparty(class_="form-control") }}</td>
             <td>
                 <ul>
@@ -38,7 +38,7 @@
             </td>
         </tr>
         <tr class="form-group">
-            <td>{{ form.iban.label(class_="form-control") }}</td>
+            <td>{{ form.iban.label(class_="col-form-label") }}</td>
             <td>{{ form.iban(class_="form-control") }}</td>
             <td>
                 <ul>
@@ -49,7 +49,7 @@
             </td>
         </tr>
         <tr class="form-group">
-            <td>{{ form.message.label(class_="form-control") }}</td>
+            <td>{{ form.message.label(class_="col-form-label") }}</td>
             <td>{{ form.message(class_="form-control") }}</td>
             <td>
                 <ul>
@@ -60,7 +60,7 @@
             </td>
         </tr>
         <tr class="form-group">
-            <td>{{ form.creditordebit.label(class_="form-control") }}</td>
+            <td>{{ form.creditordebit.label(class_="col-form-label") }}</td>
             <td>{{ form.creditordebit(class_="form-control") }}</td>
             <td>
                 <ul>    
@@ -71,7 +71,7 @@
             </td>
         </tr>
         <tr class="form-group">
-            <td>{{ form.account.label(class_="form-control") }}</td>
+            <td>{{ form.account.label(class_="col-form-label") }}</td>
             <td>{{ form.account(class_="form-control") }}</td>
             <td>
                 <ul>    
@@ -82,7 +82,7 @@
             </td>
         </tr>
         <tr class="form-group">
-            <td>{{ form.category.label(class_="form-control") }}</td>
+            <td >{{ form.category.label(class_="col-form-label") }}</td>
             <td>{{ form.category(class_="form-control") }}</td>
             <td>
                 <ul>    
@@ -93,7 +93,7 @@
             </td>
         </tr>
     </table>
-    <div><input type="submit" value="Submit transaction" /></div>
+    <div><input type="submit" class="btn btn-primary" value="Submit transaction" /></div>
 
 </form>
 

@@ -72,9 +72,9 @@
         <td>
             <form method="POST" action="{{ url_for('set_transaction_category', transaction_id=transaction.id)  }}">
                 
-                <span>{{ form.category }}</span>
-                <span>{{ form.submit }}</span>
-                <span>{{ form.account }}</span>
+                <span style="display: inline">{{ form.category(class_="form-control") }}</span>
+                <span style="display: inline">{{ form.submit(class_="form-control") }}</span>
+                <span>{{ form.account(class_="form-control") }}</span>
                 
         </form>
         </td>

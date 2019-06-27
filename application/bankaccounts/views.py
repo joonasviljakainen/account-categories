@@ -65,18 +65,18 @@ def get_bankaccount_summary(bankaccount_id):
     if period == "mtd":
         start_date = datetime(now.year, now.month, 1)
         end_date = now
-    elif period == "year":
-        start_date = datetime(now.year - 1, now.month, now.day)
-        end_date = now
+    #elif period == "year":
+    #    start_date = datetime(now.year - 1, now.month, now.day)
+    #    end_date = now
     elif period == "ytd":
         start_date = datetime(now.year, 1, 1)
         end_date = now
     elif period == "all":
         start_date = datetime(1970, 1, 1)
         end_date = now
-    elif period == "test":
-        start_date = datetime(now.year, now.month, 5)
-        end_date = now
+    #elif period == "test":
+    #    start_date = datetime(now.year, now.month, 5)
+    #    end_date = now
     else:
         start_date = datetime(now.year, now.month, 1)
         end_date = now
