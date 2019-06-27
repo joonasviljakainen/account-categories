@@ -63,4 +63,13 @@ def delete_category(category_id):
 @app.route("/categories/<category_id>")
 @login_required(roles=["USER","ADMIN"])
 def category(category_id):
-    return "NOT IMPLEMENTED YET " + category_id
+    
+    c = Category.query.get(category_id)
+    # if c.owner_id = current_user.id:
+        # ETC
+    # Category information: The name of the category, transactions in that category, accounts in that category
+    category_data = Category.get_transactions_by_account_for_category(category_id)
+    for x in category_data:
+        print(x)
+
+    return render_template("/categories/categorysummary.html", transactions = category_data, category = c)

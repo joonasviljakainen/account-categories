@@ -17,7 +17,7 @@ def get_bankaccount(bankaccount_id):
 
     sortOrder = "ASC" if (request.args.get("asc")) else "DESC"
     pageNumber = int(request.args.get("page") if request.args.get("page") else 0)
-    pageSize = 3
+    pageSize = 5
 
     bankaccount = BankAccount.query.filter_by(id=bankaccount_id).first()
     if current_user.id == bankaccount.user_id:

@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="row justify-content-center" style="margin-top: 20px">
+    <div class="col-lg-10">
+
+        <h1>Category summary</h1>
+
+        {% if transactions|length > 0 %}
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Account</th>
+                        <th>Booking Date</th>
+                        <th>Amount</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                
+                    {% for transaction in transactions %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('get_bankaccount', bankaccount_id=transaction.account_id) }}">
+                                    {{ transaction.account_name }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('get_transaction', transaction_id=transaction.transaction_id) }}">
+                                    {{ transaction.booking_date }}
+                                </a>
+                            </td>
+                            {% if transaction.credit_or_debit == "CREDIT" %}
+                            <td style="color:green">{{ transaction.amount }}</td>
+                            {% else %}
+                            <td style="color:red">-{{ transaction.amount }}</td>
+                            {% endif %}
+                            <td>
+                                {{ transaction.credit_or_debit }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% else %}
+        <p>No transactions to display</p>
+    {% endif %}
+    </div>
+</div>
+
+{% endblock %}

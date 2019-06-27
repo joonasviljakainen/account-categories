@@ -70,7 +70,6 @@ class Transaction(Base):
         res = db.engine.execute(stmt)
         response = []
         for r in res:
-
             response.append({
             "id" : r[0],
             "created_at" : r[1],
@@ -84,7 +83,8 @@ class Transaction(Base):
             "transaction_type" : r[9],
             "message":  r[10],
             "credit_or_debit" : r[11],
-            "category_name" : r[13]
+            "category_name" : r[13],
+            "owner_id": r[14]
         })
 
         return response[0]

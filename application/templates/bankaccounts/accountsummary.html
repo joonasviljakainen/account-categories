@@ -4,7 +4,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <div class="row justify-content-center" style="margin-top: 20px">
-    <div class="col-sm-10">
+    <div class="col-lg-10">
         <h1>{{ account.name }}</h1>
         <a href="{{ url_for('get_bankaccount', bankaccount_id=account.id) }}">Back to account</a>
         <ul class="nav nav-tabs">
@@ -44,7 +44,7 @@
         {% endif %}
      
             <h3>Summary of credit transactions</h3>
-            {% if creditSummary|length > 0%}
+            {% if creditSummary|length > 0 %}
             <table class="table">
                 <thead class="thead-light">
                     <tr>

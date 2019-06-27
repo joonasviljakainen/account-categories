@@ -29,17 +29,22 @@ def get_transactions():
 def get_transaction(transaction_id):
     categoryForm = CategoryUpdateForm()
     t = Transaction.get_transaction_and_category(transaction_id)
-    return render_template("transaction.html", transaction = t, form = categoryForm)
+    if current_user.id == t.get("owner_id"):
+        return render_template("transaction.html", transaction = t, form = categoryForm)
+    else:
+        return redirect(url_for('auth_login'))
 
 @app.route("/transactions/<transaction_id>/", methods=["POST"])
 @login_required(roles=["USER","ADMIN"])
 def modify_transaction(transaction_id):
 
     t = Transaction.query.get(transaction_id)
-    t.message = request.form.get("message")
-    db.session().commit()
-
-    return redirect(url_for("get_transaction", transaction_id=t.id))
+    if t and t.bankaccount_id in (map(lambda x: x.id, current_user.bankaccounts)):
+        t.message = request.form.get("message")
+        db.session().commit()
+        return redirect(url_for("get_transaction", transaction_id=t.id))
+    else:
+        return redirect(url_for('auth_login'))
 
 @app.route("/transactions/<transaction_id>/categories", methods=["POST"])
 @login_required(roles=["USER","ADMIN"])
@@ -58,10 +63,6 @@ def set_transaction_category(transaction_id):
 
         if t and t.bankaccount_id in (map(lambda x: x.id, current_user.bankaccounts)) and cat:
             t.category_id = f.category.data
-            db.session().commit()
-
-            ac = AccountCategory.query.filter_by(bankaccount_id = t.bankaccount_id, category_id = t.category_id)
-            db.session().add(ac)
             db.session().commit()
 
             return redirect( url_for("get_bankaccount", bankaccount_id=f.account.data) )
