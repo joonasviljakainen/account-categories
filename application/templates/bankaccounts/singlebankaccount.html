@@ -47,7 +47,7 @@
         <th>Message or Refnum</th>
         <th>Transaction Type</th>
         <th>Transaction Category</th>
-        <th>Change category</th>
+        <th>Category</th>
     </tr>
     {% for transaction in transactions %}
     <tr>
@@ -70,7 +70,7 @@
         <td><a href="{{ url_for('category', category_id=transaction.category_id) }}">{{ transaction.category_name }}</a></td>
         <td>
             <form method="POST" action="{{ url_for('set_transaction_category', transaction_id=transaction.id)  }}">
-                <span>{{ form.category.label }}</span>
+                
                 <span>{{ form.category }}</span>
                 <span>{{ form.submit }}</span>
                 <span>{{ form.account }}</span>
