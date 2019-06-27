@@ -4,7 +4,13 @@
 
 <h1>Categories</h1>
 <p style="color: red">{{error}}</p>
-<table>
+<table class="table">
+    <thead class="thead-light">
+        <tr>
+            <th>Category name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
 
 
     {% for category in categories %}

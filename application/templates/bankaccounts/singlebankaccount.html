@@ -3,9 +3,9 @@
 {% block body %}
 <h1>{{ account.name }}</h1>
 <h4><a href="{{ url_for('get_bankaccount_summary', bankaccount_id=account.id)}}">See category summary for this account</a></h4>
-<table>
+<table class="table">
     <tr>
-        <td>Name</td>
+        <th scope="row">Name</td>
         <td>{{ account.name }}</td>
         <td>
             <form method="POST" action="{{ url_for('update_bankaccount', bankaccount_id = account.id) }}">
@@ -15,15 +15,15 @@
     </td>
     </tr>
     <tr>
-        <td>Bank</td>
+        <th scope="row">Bank</td>
         <td>{{ account.bank }}</td>
     </tr>
     <tr>
-        <td>Current Balance</td>
+        <th scope="row">Current Balance</td>
         <td>{{ account.current_balance }}</td>
     </tr>
     <tr>
-        <td>Initial Balance</td>
+        <th scope="row">Initial Balance</td>
         <td>{{ account.initial_balance }}</td>
     </tr>
 </table>
@@ -38,17 +38,19 @@
 <a style="float: right" href="{{ url_for('get_bankaccount', bankaccount_id=account.id, page=nextPage) }}">Next page --> </a>
 {% endif %}
 
-<table>
+<table class="table">
+    <thead class="thead-light">
     <tr>
-        <th>Booking Date</th>
+        <th>Date</th>
         <th>Counterparty</th>
-        <th>Credit or Debit</th>
+        <th>Type</th>
         <th>Amount</th>
-        <th>Message or Refnum</th>
-        <th>Transaction Type</th>
-        <th>Transaction Category</th>
+        <th>Message/Refnum</th>
         <th>Category</th>
+        <th>Change category</th>
     </tr>
+</thead>
+<tbody>
     {% for transaction in transactions %}
     <tr>
         <td>
@@ -66,7 +68,6 @@
         {% endif %}
 
         <td>{{ transaction.message }}</td>
-        <td>{{ transaction.transaction_type }}</td>
         <td><a href="{{ url_for('category', category_id=transaction.category_id) }}">{{ transaction.category_name }}</a></td>
         <td>
             <form method="POST" action="{{ url_for('set_transaction_category', transaction_id=transaction.id)  }}">
@@ -80,6 +81,7 @@
 
     </tr>
     {% endfor %}
+</tbody>
 </table>
 
 {% endblock %}
