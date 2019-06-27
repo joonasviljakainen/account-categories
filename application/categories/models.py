@@ -43,7 +43,6 @@ class Category(db.Model):
         response = []
 
         for r in res:
-            print(r)
             response.append({
                 "transaction_id": r[0],
                 "account_name": r[16],

@@ -38,27 +38,15 @@ def get_transaction(transaction_id):
 @app.route("/transactions/<transaction_id>/deletions", methods=["POST"])
 @login_required(roles=["USER", "ADMIN"])
 def delete_transaction(transaction_id):
-    print("MÖS")
-    print("MÖS")
-    print("MÖS")
-    print("MÖS")
-    print("MÖS")
-    print("MÖS")
+
     t = Transaction.query.filter_by(id=transaction_id).first()
     if t and t.bankaccount_id in (map(lambda x: x.id, current_user.bankaccounts)):
-        print("OKOKOK")
-        print("OKOKOK")
-        print("OKOKOK")
+        # transaction owned by current user
         remove_transaction_amount_from_account(t)
         db.session.delete(t)
         db.session.commit()
         return redirect(url_for('bankaccounts'))
     else:
-        print("SOMETHING IS WROHG")
-        print("SOMETHING IS WROnG")
-        print("SOMETHING IS WROnG")
-        print("SOMETHING IS WROnG")
-        print("SOMETHING IS WROnG")
         return "Unauthorized, fool!"
 
 
