@@ -3,7 +3,7 @@
 {% block body %}
 <div class="row">
     <div class="col-md-12">
-        <h1>Transaction {{transaction.id}}</h1>
+        <h1 style="margin-top: 20px">Transaction {{transaction.id}}</h1>
 
         <table class="table">
             <tr>
@@ -35,11 +35,19 @@
               <td>{{transaction.category_name}}</td>
           </tr>
         </table>
-        <h6>Change the message</h6>
-        <form method="POST" action="{{url_for('modify_transaction', transaction_id=transaction.id)}}" >
-            <input name="message" type="text" placeholder="Transaction message"/>
-            <input type="submit" value="Submit"/>
-        </form>
+        <h5>Change message</h5>
+        <form method="POST" action="{{ url_for('modify_transaction', transaction_id=transaction.id) }}" >
+          <div class="form-group">
+            <label for="message">Set new message or reference</label>
+            <input name="message" id="message" class="form-control col-md-6" type="text" placeholder="Transaction message"/>
+            <input type="submit" class="btn btn-secondary" value="Submit"/>
+          </form>
+        </div>
+        <div style="margin-top: 30px">
+          <form method="POST" action="{{ url_for('delete_transaction', transaction_id=transaction.id) }}" >
+              <button type="submit" class="btn btn-danger">Delete this transaction</button>
+          </form>
+      </div>
     </div>      
 </div>
 

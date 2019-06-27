@@ -28,22 +28,28 @@ class Category(db.Model):
     
     @staticmethod
     def get_transactions_by_account_for_category(category_id):
-        stmt = text("SELECT * FROM category"
-                    " LEFT JOIN transact ON transact.category_id = category.id"
-                    " LEFT JOIN bankaccount ON transact.bankaccount_id = bankaccount_id"
-                    " WHERE category.id = :category_id"
-                    " ORDER BY transact.bankaccount_id").params(category_id=category_id)
+        #stmt = text("SELECT * FROM category"
+        #            " LEFT JOIN transact ON transact.category_id = category.id"
+        #            " LEFT JOIN bankaccount ON transact.bankaccount_id = bankaccount_id"
+        #            " WHERE category.id = :category_id"
+        #            " ORDER BY transact.bankaccount_id").params(category_id=category_id)
         
+        stmt = text("SELECT * FROM transact"
+                    " LEFT JOIN bankaccount ON transact.bankaccount_id = bankaccount_id"
+                    " WHERE transact.category_id = :category_id"
+                    " ORDER BY transact.bankaccount_id").params(category_id=category_id)
+
         res = db.engine.execute(stmt)
         response = []
 
         for r in res:
+            print(r)
             response.append({
-                "transaction_id": r[3],
-                "account_name": r[19],
-                "account_id": r[15],
-                "amount": r[11],
-                "credit_or_debit": r[14],
-                "booking_date": r[6]
+                "transaction_id": r[0],
+                "account_name": r[16],
+                "account_id": r[11],
+                "amount": r[8],
+                "credit_or_debit": r[11],
+                "booking_date": r[3]
             })
         return response
