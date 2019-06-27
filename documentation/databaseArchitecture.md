@@ -1,3 +1,3 @@
 # Pivo-Slayer Database Architecture
 
-![Architecture](transactionApp.png)
+![Architecture](diagram.png)

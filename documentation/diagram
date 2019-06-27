@@ -1,8 +1,0 @@
-%2F%2F transaction-app, 
-[Customer|forename:string;surname:string]*-*[Account|name:string;iban:string;Transactions:transaction;Users:user],
-[Account]1-*[Transaction|Vendor: Vendor;amount: 
-string;debitCreditIndicator: string;Message: string;Account: 
-account;Category: category; Vendor: Vendor], 
-[Transaction]*-*[Category|name: string; Vendors: vendor; Transactions: 
-transaction;], [Category]1-*[Vendor|name: string; Transactions: 
-transaction], [Transaction]*-1[Vendor]

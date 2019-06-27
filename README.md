@@ -53,6 +53,19 @@ Now navigate to `localhost:5000`.
 
 [Instructions for use](/documentation/instructions.md)
 
+### Installing to Heroku
+
+Clone the project with `git clone https://github.com/joonasviljakainen/account-categories.git`
+
+1. Sign up on Heroku.
+2. Install the CLI and create a heroku app with `heroku:create`.
+3. Open up the settings of you app on heroku and ensure that the key `HEROKU` is set to `1`.
+4. Add PSQL with `heroku addons:create heroku-postgresql:hobby-dev`
+5. Create a Procfile (if not already present) and punch in  `web: gunicorn --preload --workers 1 application:app`
+6. In your local directory, `pip freeze > requrements.txt`. Remove 
+7. With the CLI, puch in `git push heroku master`. The application should start up after a while.
+
+
 ### Database architecture
 
 See [Database Architecture](/documentation/databaseArchitecture.md)
